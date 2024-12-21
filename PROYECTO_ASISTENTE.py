@@ -15,7 +15,7 @@ def texto_a_audio(comando):
     palabra.runAndWait()
 
 #CAPTURA AUDIO DESDE EL MICROFONO Y ANALIZA POSIBLES ERRORES
-def capturar_voz(reconocer, microfono, tiempo_ruido = 1.0):
+def capturar_voz(reconocer, microfono, tiempo_ruido = 0.7):
     if not isinstance(reconocer, sr.Recognizer):
         raise TypeError("'reconocer' no es de la instacia 'Recognizer'")
 
@@ -24,6 +24,7 @@ def capturar_voz(reconocer, microfono, tiempo_ruido = 1.0):
     
     with microfono as fuente:
         reconocer.adjust_for_ambient_noise(fuente, duration = tiempo_ruido)
+        print("Escuchando...")
         audio = reconocer.listen(fuente)
 
     respuesta = {
@@ -72,7 +73,7 @@ if __name__ == "__main__":
     #USANDO LA FUNCION TEXTO_A_AUDIO SE HACE LEER CADENAS DE TEXTO, COMO SI LA COMPUTADORA TE ESTUVIERA HABLANDO
 
     texto_a_audio(datos['bienvenida'])
-    print("Di tu nombre: ")
+    print("Cuentame tu nombre")
     #LA FUNCION 'enviar_voz' RETORNA UNA CADENA DE TEXTO DEL AUDIO ENVIADO POR VOZ DEL USUARIO
     nombre = enviar_voz()
     print("Hola {}. Mucho gusto.".format(nombre))
