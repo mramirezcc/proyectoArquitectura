@@ -1,0 +1,36 @@
+{
+    "bienvenida": ["Hola. Soy tu Asistente Virtual. Fui creada para instruirte todo respecto a la Estructura de un computador. Antes de empezar ¿Podrias decirme tu nombre?"],
+    
+    "aprendizaje": ["Un computador es un sistema secuencial sincrono complejo que procesa informacion. La informacion dentro del ordenador se trata de forma binaria, utilizando solamente los digitos o valores logicos uno y cero, al contrario que el sistema metrico decimal habitual formado por digitos del cero al nueve.", 
+                     "Para empezar a describir la estructura basica de un computador, cabe definir las funciones que se espera que pueda realizar una maquina denominada como tal. En terminos generales un computador tiene que realizar tres funciones: ",
+                     "Procesamiento de datos. Almacenamiento de datos. Transferencia de datos",
+                     "El computador debe procesar datos, transformando la informacion recibida. Asi mismo debe almacenar datos. tanto resultados de computaciones intermedias, como el resultado final de estas. De la misma manera el computador debe realizar transferencia de datos entre su entorno y el mismo. Para realizar estas tres funciones es necesario un mecanismo de control que gobierne el flujo de datos entre los diversos modulos."],
+    
+    
+    "unidad central de proceso": ["La unidad central de proceso controla el funcionamiento de todos los elementos del computador. Controla el flujo de datos, los procesa, y gobierna el secuenciamiento y las acciones en todo el sistema.",
+                                  "Una CPU básica consta principalmente de las siguientes unidades","Unidad de Control UC. Unidad Aritmetico Logica ALU. Registros internos",
+                                  "La UNIDAD DE CONTROL UC, se encarga de leer de la memoria las instrucciones que se debe ejecutar y de secuenciar el acceso a los datos y las operaciones a realizar por la unidad de proceso. Se encarga de acceder a memoria habilitando un camino de datos para que las instrucciones y los datos lleguen a la CPU.",
+                                  "La Unidad Aritmetico Logica ALU, es la parte de la CPU encargada de realizar las transformaciones de los datos. La ALU consta de una serie de modulos que permiten realizar operaciones aritmeticas y logicas.",
+                                  "Los registros internos son pequeñas memorias de alta velocidad dentro de un computador que se utilizan para almacenar datos temporales y realizar operaciones rapidas."],
+    "memoria": ["En la memoria se almacenaran el programa y los datos que, provenientes de un dispositivo de Entrada Salida o dispositivos de almacenamiento secundario, va a ejecutar la CPU. La matriz de memoria está organizada en palabras, cada una de las cuales tiene asignada una direccion que indica su posicion en la matriz.",
+                "La memoria en un computador es un dispositivo electrónico que almacena temporalmente programas y datos que están siendo utilizados por el procesador, para acceder a ellos más rapidamente."],
+    "entrada salida": ["Un computador tiene una gran cantidad de dispositivos de entrada y salida. Desde un teclado hasta un monitor de video, pasando por un disco duro, todos son dispositivos que la CPU necesita para obtener datos o para almacenar o mostrar resultados.",
+                       "El principal problema de estos dispositivos perifericos es su gran variedad. Muchos de ellos comunican a un operador humano con el computador y otros sirven de conexion con otros computadores.",
+                       "El objetivo de cada transferencia es llevar los datos desde el periferico a una zona concreta de la memoria y viceversa."],  
+    "sistemas de interconexión buses": ["La conexion entre los diversos componentes de un computador se efectua fisicamente a traves de los buses. Un bus se define como un enlace de comunicacion compartido que usa multiples cables para conectar subsistemas.",
+                                        "Cada linea es capaz de transmitir una tensión electrica que representa un uno o un cero binario.",
+                                        "Las señales de los buses estan agrupadas siguiendo un criterio de funcionalidad:",
+                                        "Bus de datos. Bus de direcciones. Bus de control. Bus de alimentacion",
+                                        "Los buses de datos son las iineas por las que se transmiten los datos entre los diversos dispositivos que forman el computador.",
+                                        "Los buses de direcciones sirven para indicar a la memoria o al resto de dispositivos la posicion del dato que se quiere acceder.",
+                                        "Los buses de control agrupan todas las señales de control que gobiernan el acceso al bus de datos y direcciones. Agrupa señales de lectura, escritura, arbitraje, entre otros.",
+                                        "Los buses de alimentacion son los cables o conexiones que suministran energia electrica a los componentes internos del equipo, como la placa madre, la CPU, las tarjetas de expansion y los dispositivos de almacenamiento."],
+    "perifericos": ["Los perifericos son todos aquellos dispositivos que sin ser imprescindibles en la estructura de un computador, son necesarios para suministrar datos a la maquina o visualizar los resultados.",
+                    "Los periféricos de entrada de datos son interruptores, teclados, ratones, pantallas graficas interactivas y digitalizadores de imagenes (escaners)."],
+    "PE PREGUNTA 01": ["PRIMERA PREGUNTA: ¿Cual es el objetivo principal del pensamiento computacional?",
+                       "a) Resolver problemas utilizando algoritmos y abstraccion. b) Programar robots y sistemas autonomos. c) Diseñar hardware de computadoras."],
+    "PE PREGUNTA 02": ["SEGUNDA PREGUNTA: 2. El primer paso del pensamiento computacional es: identificar el problema.",
+                       "¿VERDADERO? o ¿FALSO?"],
+    "PE PREGUNTA 03": ["TERCERA PREGUNTA: ¿Qué es un algoritmo en terminos de pensamiento computacional?",
+                       "1) Un patron de diseño visual 2) Un lenguaje de programacion 3) Una secuencia de pasos para resolver un problema 4) Una representacion grafica de datos"]
+}
