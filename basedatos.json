@@ -1,16 +1,4 @@
 {
-    "PE PREGUNTA 01": [
-        "PRIMERA PREGUNTA: ¿Cual es el objetivo principal del pensamiento computacional?",
-        "a) Resolver problemas utilizando algoritmos y abstraccion. b) Programar robots y sistemas autonomos. c) Diseñar hardware de computadoras."
-    ],
-    "PE PREGUNTA 02": [
-        "SEGUNDA PREGUNTA: 2. El primer paso del pensamiento computacional es: identificar el problema.",
-        "¿VERDADERO? o ¿FALSO?"
-    ],
-    "PE PREGUNTA 03": [
-        "TERCERA PREGUNTA: ¿Qué es un algoritmo en terminos de pensamiento computacional?",
-        "1) Un patron de diseño visual 2) Un lenguaje de programacion 3) Una secuencia de pasos para resolver un problema 4) Una representacion grafica de datos"
-    ],
     "bienvenida": [
         "Hola. Soy tu Asistente Virtual. Fui creada para instruirte todo respecto al hermoso mundo de la programacion. Antes de empezar ¿Podrias decirme tu nombre?"
     ],
@@ -93,5 +81,80 @@
             "definicion": "Ocultar detalles internos de una clase y exponer solo lo necesario.",
             "ejemplo": "private String contraseña; /* Ejemplo de variable encapsulada */"
         }
-    }
+    },
+
+    "PE PREGUNTA 1": [
+        "¿Cuál es el objetivo principal del pensamiento computacional?",
+        "a) Resolver problemas utilizando algoritmos y abstracción.",
+        "b) Programar robots y sistemas autónomos.",
+        "c) Diseñar hardware de computadoras."
+      ],
+      
+      "PE PREGUNTA 2": [
+        "El primer paso del pensamiento computacional es identificar el problema.", 
+        "a) Verdadero",
+        "b) Falso"
+      ],
+      
+      "PE PREGUNTA 3": [
+        "¿Qué es un algoritmo en términos de pensamiento computacional?",
+        "a) Un patrón de diseño visual",
+        "b) Un lenguaje de programación", 
+        "c) Una secuencia de pasos para resolver un problema",
+        "d) Una representación gráfica de datos"  
+      ],
+      
+      "PE PREGUNTA 4": [
+        "¿Para qué sirven las variables en programación?",
+        "a) Para almacenar datos que no cambian",
+        "b) Para realizar operaciones matemáticas",
+        "c) Para almacenar datos que pueden modificarse durante la ejecución de un programa"  
+      ],
+      
+      "PE PREGUNTA 5": [
+        "¿Cuál es la diferencia entre variables y constantes?",
+        "a) Ninguna, son lo mismo",
+        "b) Las variables mantienen un valor fijo", 
+        "c) Las constantes mantienen un valor fijo que no cambia"
+      ],
+      
+      "PE PREGUNTA 6": [
+        "Menciona dos ejemplos de estructuras de datos",
+        "a) Colas y pilas",
+        "b) Arreglos y listas enlazadas",
+        "c) Arreglos y árboles",
+        "d) Matrices y grafos"
+      ],
+      
+      "PE PREGUNTA 7": [
+         "¿Qué es la programación orientada a objetos?",
+         "a) Paradigma de programación basado en módulos funcionales",
+         "b) Paradigma de programación basado en algoritmos",
+         "c) Paradigma de programación basado en objetos que emulan entidades reales con propiedades y métodos"
+      ],
+      
+      "PE PREGUNTA 8": [
+        "Explica un uso típico de una pila como estructura de datos",
+        "a) Administración de memoria dinámica",
+        "b) Rehacer/deshacer en editores de texto",
+        "c) Almacenamiento temporal de datos",
+        "d) Comunicación entre programas"
+      ],
+      
+      "PE PREGUNTA 9": [
+        "¿Para qué sirven las estructuras condicionales en programación?",
+        "a) Para generar números aleatorios",
+        "b) Para bifurcar el flujo del programa dependiendo de si una condición es cierta o falsa", 
+        "c) Para almacenar datos temporalmente",
+        "d) Para facilitar operaciones matemáticas"  
+      ],
+      
+      
+      "PE PREGUNTA 10": [
+        "Menciona un caso de uso típico para una cola como estructura de datos",
+        "a) Evaluador de expresiones matemáticas",  
+        "b) Autocompletado de palabras en un editor",
+        "c) Gestión de procesos e hilos en un sistema operativo",
+        "d) Animaciones en videojuegos"
+      ]
 }
