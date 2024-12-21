@@ -8,6 +8,10 @@ import json
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
+
+
+
+
 #CONVERTIR CADENAS DE TEXTO A AUDIO Y REPRODUCIRLAS
 def texto_a_audio(comando):
     palabra = pyttsx3.init()
@@ -76,6 +80,7 @@ if __name__ == "__main__":
     print("Cuentame tu nombre")
     #LA FUNCION 'enviar_voz' RETORNA UNA CADENA DE TEXTO DEL AUDIO ENVIADO POR VOZ DEL USUARIO
     nombre = enviar_voz()
+
     print("Hola {}. Mucho gusto.".format(nombre))
     texto_a_audio("Hola {}. Mucho gusto.".format(nombre))
     print("{} Ahora voy a explicarte sobre las opciones que tiene este programa. Tienes 3 opciones para escoger.".format(nombre))
@@ -111,7 +116,7 @@ if __name__ == "__main__":
             class ImageWindow:
                 def __init__(self, root, image_path):
                     self.root = root
-                    self.root.title("Imagen")
+                    self.root.title("IMAGEN")
                     
                     self.image = Image.open(image_path)
                     self.tk_image = ImageTk.PhotoImage(self.image)
@@ -126,7 +131,7 @@ if __name__ == "__main__":
 
             def main():
                 root = tk.Tk()
-                image_path = "IMG/computador.jpg"  # Ruta de la imagen que deseas abrir
+                image_path = "IMG/iaBackground.jpg"  # Ruta de la imagen que deseas abrir
                 
                 image_window = ImageWindow(root, image_path)
                 image_window.update()  # Iniciar la función de actualización
@@ -137,7 +142,7 @@ if __name__ == "__main__":
                 main()
 
             try:
-                img = Image.open("arquitectura.png")
+                img = Image.open("IMG/introduccionProgramacion.png")
             except:
                 print("No se pudo cargar la imagen.")
                 sys.exit(1)
