@@ -32,7 +32,7 @@ lbl_text.grid(column=0, row=1)
 queue_ui_to_main = queue.Queue()
 queue_main_to_ui = queue.Queue()
 
-with open('basedatos.json', 'r') as archivo:
+with open('basedatos.json', encoding="utf-8") as archivo:
     datos = json.load(archivo)
 
 def texto_a_audio(text):
