@@ -14,18 +14,26 @@ root = tk.Tk()
 root.iconbitmap("IMG/icon.ico")
 root.geometry("800x600")
 root.title("ASISTENTE VIRTUAL")
+root.config(bg="#262626")
+root.resizable(False, False) # deshabilita redimensionamiento
+root.maxsize(800, 600) # establece tamaño máximo
+root.minsize(800, 600)
 
 # Initialize images/widgets globally
 image_queue = queue.Queue()
 
-image = Image.open("IMG/iaBackground.jpg")
+image = Image.open("IMG/iaBackground.png")
 image = image.resize((790, 450))
 photo = ImageTk.PhotoImage(image)
 image_label = tk.Label(root, image = photo)
+image_label.config(bg="#262626")
 image_label.grid(column=0, row=0, pady=20)
 image_queue.put(photo)
 
 lbl_text = tk.Label(root, text="Haz click en el boton 'iniciar' para empezar", font=("Arial", 13, "bold"))
+lbl_text.config(bg="#262626",
+                fg="#fefae4", # color mostaza
+                font=("Oswald", 20, "bold")) 
 lbl_text.grid(column=0, row=1)
 
 # Queue for communication between threads
@@ -84,10 +92,12 @@ def execute_start_logic():
     send_text_to_ui("OPCIONES: 1) Aprendizaje   2) Cuestionario    3) Juegos")
     texto_a_audio("Aprendizaje. Cuestionario. Juegos.")
     texto_a_audio(
-        "La opción Aprendizaje es donde podrás aprender todo con respecto a Programación. La opción Tests es donde podrás poner en práctica lo que aprendiste mediante preguntas. Y por último, la tercer opción, es Juegos, donde también podrás poner en acción lo que aprendiste jugando.")
+        "La opción Aprendizaje es donde podrás aprender todo con respecto a Programación. La opción Cuestionario es donde podrás poner en práctica lo que aprendiste mediante preguntas. Y por último, la tercer opción, es Juegos, donde también podrás poner en acción lo que aprendiste jugando.")
     send_text_to_ui("¿Qué opción eliges?")
-      
+
+    mic_label.grid(column=0, row=2, pady=10)  
     respuesta = enviar_voz()
+    mic_label.grid_forget()
 
     if respuesta == "aprendizaje":
 
@@ -109,7 +119,9 @@ def execute_start_logic():
         send_text_to_ui("Conceptos de Programacion.")
         texto_a_audio("Variables. Constantes. Tipos de datos. Operadores. Estructuras condicionales. Bucles. Funciones. Compiladores. Depuración. Algoritmos. Estructuras de datos. Programación Orientada a Objetos (POO).")
         
-        respuesta = "estructuras de datos"
+        mic_label.grid(column=0, row=2, pady=10)  
+        respuesta = enviar_voz()
+        mic_label.grid_forget()
 
         if respuesta == "variables":
             texto_a_audio(datos['variables'])
@@ -236,7 +248,7 @@ def execute_start_logic():
                 send_text_to_ui("¿Deseas saber sobre otro concepto?\n1) Clases 2) Objetos 3) Herencia 4) Polimorfismo 5) Encapsulamiento 6) No")
                 texto_a_audio("¿Deseas saber sobre otra estructura?")
 
-    elif respuesta == "Cuestionario":
+    elif respuesta == "cuestionario":
         print ("Cuestionario")
         
         def comp(solucion, rpta):
@@ -245,7 +257,7 @@ def execute_start_logic():
             else:
                 tus_respuestas.append(0)
 
-        image = Image.open("IMG/perifericos.jpg")
+        image = Image.open("IMG/cuestionario.png")
         image = image.resize((790, 450))
         photo = ImageTk.PhotoImage(image)
         image_queue.put(photo)
@@ -445,8 +457,22 @@ main_thread.start()
 mic_image = ImageTk.PhotoImage(Image.open("IMG/mic_icon.png").resize((40, 40)))
 mic_label = tk.Label(root, image=mic_image, bd=0, width=40, height=40)
 
-btn_start = tk.Button(root, text="Iniciar", command=start, font=("Arial", 12, "bold"))
-btn_start.grid(column=0, row=2, pady=10)
+btn_start = tk.Button(root, text="Iniciar", command=start, 
+                      font=("Arial", 12, "bold"), 
+                      bg="#ffffff", fg="#555555", 
+                      borderwidth=0, 
+                      highlightthickness=0)
+
+btn_start.grid(column=0, row=2, pady=10)  
+
+def on_enter(e):
+    btn_start.config(font=("Arial", 14, "bold"))
+
+def on_leave(e):
+    btn_start.config(font=("Arial", 12, "bold"))
+
+btn_start.bind("<Enter>", on_enter)
+btn_start.bind("<Leave>", on_leave)
 
 # Run the main loop directly
 root.mainloop()
