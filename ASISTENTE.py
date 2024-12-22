@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 import threading
 import queue
 import json
+import random
 
 recognizer = sr.Recognizer()
 microphone = sr.Microphone()
@@ -19,6 +20,80 @@ root.resizable(False, False) # deshabilita redimensionamiento
 root.maxsize(800, 600) # establece tamaño máximo
 root.minsize(800, 600)
 
+# Dimensiones del tablero
+WIDTH = 400  
+HEIGHT = 400
+
+# Tamaño de las celdas 
+CELL_SIZE = 25
+
+class Grid:
+    def __init__(self, canvas, width, height, cell_size):
+        self.canvas = canvas
+        self.WIDTH = width
+        self.HEIGHT = height
+        self.CELL_SIZE = cell_size
+
+        x1, y1 = random.randint(0, 15), random.randint(0, 15)
+        x2, y2 = random.randint(0, 15), random.randint(0, 15)
+        self.user_cell = (x1, y1)
+        self.goal_cell = (x2, y2)
+
+        self.obstacle_cells = []
+
+        for _ in range(90):
+            x3, y3 = random.randint(0, 15), random.randint(0, 15)
+
+            if (x3, y3) != (x2, y2) and (x3, y3) != (x1, y1):
+                self.obstacle_cells.append((x3, y3))
+
+        self.cells = []
+        self.initialize_cells()
+        self.draw_cells()
+        
+    def initialize_cells(self):
+        for row in range(20):
+            for col in range(20):
+                x1 = col * CELL_SIZE
+                y1 = row * CELL_SIZE
+                x2 = x1 + CELL_SIZE
+                y2 = y1 + CELL_SIZE
+
+                fill_color = "white"
+                if (row, col) == self.user_cell:
+                    fill_color = "green"
+                elif (row, col) == self.goal_cell:
+                    fill_color = "red"
+                elif (row, col) in self.obstacle_cells:
+                    fill_color = "black"
+
+                cell = self.canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color)
+                self.cells.append(cell)
+
+    def draw_cells(self):
+        for cell_id in self.cells:
+            self.canvas.delete(cell_id)  # Borrar celdas antiguas
+
+        self.initialize_cells()
+
+    def move_up(self, evt):
+        self.try_move(self.user_cell[0] - 1, self.user_cell[1])
+
+    def move_down(self, evt):
+        self.try_move(self.user_cell[0] + 1, self.user_cell[1])
+
+    def move_left(self, evt):
+        self.try_move(self.user_cell[0], self.user_cell[1] - 1)
+
+    def move_right(self, evt):
+        self.try_move(self.user_cell[0], self.user_cell[1] + 1)
+
+    def try_move(self, row, col):
+        if (row >= 0 and row < 20 and col >= 0 and col < 20 and
+                (row, col) not in self.obstacle_cells):
+            self.user_cell = (row, col)
+            self.draw_cells()
+
 # Initialize images/widgets globally
 image_queue = queue.Queue()
 
@@ -26,8 +101,10 @@ image = Image.open("IMG/iaBackground.png")
 image = image.resize((790, 450))
 photo = ImageTk.PhotoImage(image)
 image_label = tk.Label(root, image = photo)
+
+print((root.winfo_reqwidth()))
+image_label.grid(column=0, row=0, pady=20, padx=((800 - photo.width())/ 2))
 image_label.config(bg="#262626")
-image_label.grid(column=0, row=0, pady=20)
 image_queue.put(photo)
 
 lbl_text = tk.Label(root, text="Haz click en el boton 'iniciar' para empezar", font=("Arial", 13, "bold"))
@@ -93,6 +170,7 @@ def execute_start_logic():
     texto_a_audio("Aprendizaje. Cuestionario. Juegos.")
     texto_a_audio(
         "La opción Aprendizaje es donde podrás aprender todo con respecto a Programación. La opción Cuestionario es donde podrás poner en práctica lo que aprendiste mediante preguntas. Y por último, la tercer opción, es Juegos, donde también podrás poner en acción lo que aprendiste jugando.")
+    texto_a_audio("¿Qué opción eliges?")
     send_text_to_ui("¿Qué opción eliges?")
 
     mic_label.grid(column=0, row=2, pady=10)  
@@ -375,13 +453,13 @@ def execute_start_logic():
                 send_text_to_ui("¿Deseas saber sobre otro concepto?\n1) Clases 2) Objetos 3) Herencia 4) Polimorfismo 5) Encapsulamiento 6) No")
                 texto_a_audio("¿Deseas saber sobre otra estructura?")
         
-        btn_start = tk.Button(root, text="Volver a iniciar", command=start, 
-                      font=("Arial", 12, "bold"), 
-                      bg="#ffffff", fg="#555555", 
-                      borderwidth=0, 
-                      highlightthickness=0)
+        # btn_start = tk.Button(root, text="Volver a iniciar", command=start, 
+        #               font=("Arial", 12, "bold"), 
+        #               bg="#ffffff", fg="#555555", 
+        #               borderwidth=0, 
+        #               highlightthickness=0)
 
-        btn_start.grid(column=0, row=2, pady=10)    
+        # btn_start.grid(column=0, row=2, pady=10)    
 
 
     elif respuesta == "cuestionario":
@@ -541,9 +619,128 @@ def execute_start_logic():
 
 
     elif respuesta == "juegos":
-        print ("juegos")
+        image = Image.open("IMG/perifericos.jpg")
+        image = image.resize((790, 450))
+        photo = ImageTk.PhotoImage(image)
+        image_queue.put(photo)
+
+        send_text_to_ui("Elegiste la opcion JUEGOS.")
+        texto_a_audio("Elegiste la opcion JUEGOS.")
+        send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados")
+        texto_a_audio("Por el momento tenemos 2 juegos bastante divertidos, ¿cual te gustaria probar?")
+        
+        respuesta = "laberinto de instrucciones"
+
+        if respuesta == "laberinto de instrucciones":
+
+            image = Image.open("IMG/fondolaberinto.jpg")
+            image = image.resize((790, 450))
+            photo = ImageTk.PhotoImage(image)
+            image_queue.put(photo)
+
+            canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
+            canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
+
+            grid = Grid(canvas, WIDTH, HEIGHT, CELL_SIZE)
+
+            while True:
+                send_text_to_ui("Escuchando tus indicaciones...")
+                texto_a_audio("Escuchando tus indicaciones...")                
+                respuesta = enviar_voz()
+                if respuesta == "arriba":
+                    grid.move_up(None)
+                elif respuesta == "abajo":
+                    grid.move_down(None)
+                elif respuesta == "derecha":
+                    grid.move_right(None)
+                elif respuesta == "izquierda":
+                    grid.move_left(None)
+                else:
+                    texto_a_audio("No es una dirección válida, dime una dirección válida.")
+
+                if grid.user_cell == grid.goal_cell:
+                    texto_a_audio("¡Felicidades, llegaste a tu destino!")
+                    break
+        
+        elif respuesta == "ahorcados":
+
+            image = Image.open("IMG/ahorcado1.jpg")
+            image = image.resize((200, 300))
+            photo = ImageTk.PhotoImage(image)
+            image_queue.put(photo)
+
+            send_text_to_ui("Empezamos con el juego")
+            texto_a_audio("Empezamos con el juego")
+
+            
+            # 0 palabra, 1 cadena, 2 contador de errores
+            palabra_elegida = datos['ahorcado'][random.randint(0, len(datos['ahorcado']) - 1)]
+            ahorcado_info = [palabra_elegida, texto_ahorcado(palabra_elegida), 0]
+            send_text_to_ui(ahorcado_info[1])
+
+            while True:
+                texto_a_audio("Elige una letra")
+                mic_label.grid(column=0, row=2, pady=10)  
+                letra = enviar_voz()            
+                mic_label.grid_forget()
+                
+
+                print("se obtuvo la letra: " + letra[0])
+                
+                send_text_to_ui(ahorcado_info[1])
+                yalas = set()
+
+                yala = corroborar_letra(ahorcado_info, letra[0], yalas)
+                if yala:
+                    texto_a_audio("Ya elegiste esa palabra")
+                else:
+                    print("mi nueva cadena es")
+                    print(ahorcado_info[1])
+                    send_text_to_ui(ahorcado_info[1])
+
+                    actualizaar_imagen_ahorcado(ahorcado_info[2])
+
+                    if ahorcado_info[2] == 6:
+                        texto_a_audio("perdiste")
+                        break
+
+    
+
+def actualizaar_imagen_ahorcado(contador): 
+    nombre = "IMG/ahorcado" + str(contador + 1) + ".jpg"
+    image = Image.open(nombre)
+    image = image.resize((200, 300))
+    photo = ImageTk.PhotoImage(image)
+    image_queue.put(photo)
+
+def texto_ahorcado(palabra):
+    cadena = ""
+
+    for i in range(len(palabra) - 1):
+        cadena += "_ "
+    
+    cadena += "_"
+
+    return cadena
+
+def corroborar_letra(info, letra, yalas):
+    if letra in yalas:
+        return True
+    elif letra in info[0]:
+        mensaje = "la letra:" + letra + " si se encuentra en la palabra"
+        print(mensaje)
+        yalas.add(letra)
+        actualizar_cadena(info, letra)
     else:
-        print("no elegiste nada")
+        yalas.add(letra)
+        info[2] = info[2] + 1
+
+    return False
+
+def actualizar_cadena(info, letra):
+    for i in range(len(info[0])):
+        if info[0][i] == letra:
+            info[1] = info[1][:(2 * i)] + letra + info[1][(2 * i + 1):]
 
 def cond(opcion):
                 if opcion == "no":
@@ -573,8 +770,15 @@ def update_ui():
         pass
     
     try:
+        global photo
         photo = image_queue.get_nowait()     
-        image_label.config(image = photo)        
+        image_label.config(image = photo)
+        print("de la ventana")
+        print(root.winfo_reqwidth())
+        print(photo.width())
+        
+        image_label.grid(column=0, row=0, pady=20, padx=((800 - photo.width())/ 2))
+
 
 
     except queue.Empty: 
@@ -590,8 +794,8 @@ main_thread = threading.Thread(target=main_thread_logic)
 main_thread.daemon = True
 main_thread.start()
 
-mic_image = ImageTk.PhotoImage(Image.open("IMG/mic_icon.png").resize((40, 40)))
-mic_label = tk.Label(root, image=mic_image, bd=0, width=40, height=40)
+mic_image = ImageTk.PhotoImage(Image.open("IMG/mic_icon.png").resize((45, 45)))
+mic_label = tk.Label(root, image=mic_image, bd=0, width=45, height=45)
 
 btn_start = tk.Button(root, text="Iniciar", command=start, 
                       font=("Arial", 12, "bold"), 
