@@ -110,7 +110,7 @@ image_queue.put(photo)
 lbl_text = tk.Label(root, text="Haz click en el boton 'iniciar' para empezar", font=("Arial", 13, "bold"))
 lbl_text.config(bg="#262626",
                 fg="#fefae4", # color mostaza
-                font=("Oswald", 20, "bold")) 
+                font=("Oswald", 20, "bold"))
 lbl_text.grid(column=0, row=1)
 
 # Queue for communication between threads
@@ -152,10 +152,11 @@ def main_thread_logic():
 
 def execute_start_logic():
     send_text_to_ui("Bienvenid@")
-    btn_start.grid_forget()  
+    btn_start.grid_forget()
     texto_a_audio("Bienvenido")
     send_text_to_ui("¿Comó te llamas?")
     texto_a_audio("¿Comó te llamas?")
+    mic_label.grid(column=0, row=2, pady=10)
     mic_label.grid(column=0, row=2, pady=10)
     nombre = enviar_voz()
     mic_label.grid_forget()
@@ -187,7 +188,7 @@ def execute_start_logic():
         send_text_to_ui("Elegiste la opcion APRENDIZAJE.")
         texto_a_audio("Elegiste la opcion APRENDIZAJE.")
         texto_a_audio("Muy bien antes de empezar quisiera hacer una introduccion a el tema conocido como Programación.")
-        
+
         image = Image.open("IMG/definicion.png")
         image = image.resize((790, 450))
         photo = ImageTk.PhotoImage(image)
@@ -208,7 +209,7 @@ def execute_start_logic():
         image_queue.put(photo)
         send_text_to_ui("RAZONES.")
         texto_a_audio(datos['razones'])
-        
+
         image = Image.open("IMG/conceptos.png")
         image = image.resize((790, 450))
         photo = ImageTk.PhotoImage(image)
@@ -217,7 +218,7 @@ def execute_start_logic():
         send_text_to_ui("Conceptos de Programacion.")
         texto_a_audio("Variables. Constantes. Tipos de datos. Operadores. Estructuras condicionales. Bucles. Funciones. Compiladores. Depuración. Algoritmos. Estructuras de datos. Programación Orientada a Objetos (POO).")
         texto_a_audio("Cual")
-        mic_label.grid(column=0, row=2, pady=10)  
+        mic_label.grid(column=0, row=2, pady=10)
         respuesta = enviar_voz()
         mic_label.grid_forget()
 
@@ -311,7 +312,7 @@ def execute_start_logic():
             texto_a_audio("existen distintos tipos de estructura, aqui te mostrare 5 de ellas.")
             send_text_to_ui("1) Arreglos 2) Listas enlazadas 3) Pilas 4) Colas 5) Hash\n¿Por cual deseas empezar?")
             texto_a_audio("¿Por cual deseas empezar?")
-            
+
             while True:
 
                 respuesta = enviar_voz()
@@ -330,7 +331,7 @@ def execute_start_logic():
                     texto_a_audio(datos['estructuras_de_datos']['arreglos']['ventajas'])
                     texto_a_audio("Desventajas:")
                     texto_a_audio(datos['estructuras_de_datos']['arreglos']['desventajas'])
-                
+
                 elif respuesta == "listas enlazadas":
                     image = Image.open("IMG/linkedList.png")
                     image = image.resize((790, 450))
@@ -342,7 +343,7 @@ def execute_start_logic():
                     texto_a_audio(datos['estructuras_de_datos']['listas_enlazadas']['ventajas'])
                     texto_a_audio("Desventajas:")
                     texto_a_audio(datos['estructuras_de_datos']['listas_enlazadas']['desventajas'])
-                
+
                 elif respuesta == "pilas":
                     image = Image.open("IMG/pila.png")
                     image = image.resize((790, 450))
@@ -354,7 +355,7 @@ def execute_start_logic():
                     texto_a_audio(datos['estructuras_de_datos']['pilas']['ventajas'])
                     texto_a_audio("Desventajas:")
                     texto_a_audio(datos['estructuras_de_datos']['pilas']['desventajas'])
-                    
+
                 elif respuesta == "colas":
                     image = Image.open("IMG/colas.png")
                     image = image.resize((790, 450))
@@ -409,7 +410,7 @@ def execute_start_logic():
                     texto_a_audio(datos['POO']['clases']['definicion'])
                     texto_a_audio("Observa el ejemplo")
                     texto_a_audio(datos['POO']['arrays']['ejemplo'])
-                                    
+
                 elif respuesta == "objetos":
                     image = Image.open("IMG/objetos.png")
                     image = image.resize((790, 450))
@@ -419,7 +420,7 @@ def execute_start_logic():
                     texto_a_audio(datos['POO']['objetos']['definicion'])
                     texto_a_audio("Observa el ejemplo")
                     texto_a_audio(datos['POO']['objetos']['ejemplo'])
-                
+
                 elif respuesta == "herencia":
                     image = Image.open("IMG/herencia.png")
                     image = image.resize((790, 450))
@@ -429,7 +430,7 @@ def execute_start_logic():
                     texto_a_audio(datos['POO']['herencia']['definicion'])
                     texto_a_audio("Observa el ejemplo")
                     texto_a_audio(datos['POO']['herencia']['ejemplo'])
-                                        
+
                 elif respuesta == "polimorfismo":
                     image = Image.open("IMG/polimorfismo.png")
                     image = image.resize((790, 450))
@@ -439,7 +440,7 @@ def execute_start_logic():
                     texto_a_audio(datos['POO']['polimorfismo']['definicion'])
                     texto_a_audio("Observa el ejemplo")
                     texto_a_audio(datos['POO']['polimorfismo']['ejemplo'])
-                
+
                 elif respuesta == "encapsulamiento":
                     image = Image.open("IMG/encapsulamiento.png")
                     image = image.resize((790, 450))
@@ -452,19 +453,19 @@ def execute_start_logic():
 
                 send_text_to_ui("¿Deseas saber sobre otro concepto?\n1) Clases 2) Objetos 3) Herencia 4) Polimorfismo 5) Encapsulamiento 6) No")
                 texto_a_audio("¿Deseas saber sobre otra estructura?")
-        
-        # btn_start = tk.Button(root, text="Volver a iniciar", command=start, 
-        #               font=("Arial", 12, "bold"), 
-        #               bg="#ffffff", fg="#555555", 
-        #               borderwidth=0, 
+
+        # btn_start = tk.Button(root, text="Volver a iniciar", command=start,
+        #               font=("Arial", 12, "bold"),
+        #               bg="#ffffff", fg="#555555",
+        #               borderwidth=0,
         #               highlightthickness=0)
 
-        # btn_start.grid(column=0, row=2, pady=10)    
+        # btn_start.grid(column=0, row=2, pady=10)
 
 
     elif respuesta == "cuestionario":
         print ("Cuestionario")
-        
+
         def comp(solucion, rpta):
             if rpta == solucion:
                 tus_respuestas.append(1)
@@ -524,7 +525,7 @@ def execute_start_logic():
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
             send_text_to_ui("Pregunta 04\nElige sabiamente...")
-            texto_a_audio(datos['PE_4'], respuesta)
+            texto_a_audio(datos['PE_4'])
 
             respuesta = enviar_voz()
 
@@ -603,23 +604,32 @@ def execute_start_logic():
             t2 = "_RESPUESTA"
             t3 = "_JUSTIFICACION"
             calificacion = 0
-            
+
             for punto in tus_respuestas:
                 if punto == 1:
-                    calificacion + 1
+                    calificacion = calificacion + 1
 
-            send_text_to_ui("Tu puntuacion ha sido de ", calificacion, " sobre 10.")
-            texto_a_audio("Tu puntuacion ha sido de ", calificacion, " sobre 10.")
+            msg = "Tu puntuacion ha sido de "+ str(calificacion) + " sobre 10."
+
+            send_text_to_ui(msg)
+            texto_a_audio(msg)
 
             for i, elemento in enumerate(tus_respuestas):
-                if elemento == 1:
-                    send_text_to_ui("Pregunta ", i+1, "\nRespuesta Correcta:", datos[t1+str(i+1)+t2])
-                    texto_a_audio("Pregunta ", i+1, "\nRespuesta Correcta:", datos[t1+str(i+1)+t2])
-                    texto_a_audio("debido a que", datos[t1+str(i+1)+t3])
+                if elemento == 0:
+                    ruta = "IMG/P"+str(i+1)+".jpg"
+                    image = Image.open(ruta)
+                    image = image.resize((790, 450))
+                    photo = ImageTk.PhotoImage(image)
+                    image_queue.put(photo)
+                    msg = "Pregunta " + str(i+1) + "\nRespuesta Correcta:" + datos[t1+str(i+1)+t2]
+                    send_text_to_ui(msg)
+                    texto_a_audio(msg)
+                    msg = "debido a que" + datos[t1+str(i+1)+t3]
+                    texto_a_audio(msg)
 
 
     elif respuesta == "juegos":
-        image = Image.open("IMG/perifericos.jpg")
+        image = Image.open("IMG/juegos.png")
         image = image.resize((790, 450))
         photo = ImageTk.PhotoImage(image)
         image_queue.put(photo)
@@ -629,7 +639,9 @@ def execute_start_logic():
         send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados")
         texto_a_audio("Por el momento tenemos 2 juegos bastante divertidos, ¿cual te gustaria probar?")
         
-        respuesta = "laberinto de instrucciones"
+        mic_label.grid(column=0, row=2, pady=10)
+        respuesta = enviar_voz()
+        mic_label.grid_forget();
 
         if respuesta == "laberinto de instrucciones":
 
@@ -645,8 +657,10 @@ def execute_start_logic():
 
             while True:
                 send_text_to_ui("Escuchando tus indicaciones...")
-                texto_a_audio("Escuchando tus indicaciones...")                
+                texto_a_audio("Escuchando tus indicaciones...")
+                mic_label.grid(column=0, row=2, pady=10)                
                 respuesta = enviar_voz()
+                mic_label.grid_forget();
                 if respuesta == "arriba":
                     grid.move_up(None)
                 elif respuesta == "abajo":
@@ -672,21 +686,28 @@ def execute_start_logic():
             send_text_to_ui("Empezamos con el juego")
             texto_a_audio("Empezamos con el juego")
 
-            
-            # 0 palabra, 1 cadena, 2 contador de errores
-            palabra_elegida = datos['ahorcado'][random.randint(0, len(datos['ahorcado']) - 1)]
-            ahorcado_info = [palabra_elegida, texto_ahorcado(palabra_elegida), 0]
+            keys = list(datos["ahorcado"].keys())  
+
+            palabra_elegida = random.choice(keys) 
+
+            palabra = datos["ahorcado"][palabra_elegida]["palabra"]  
+
+            print(palabra_elegida)
+
+            ahorcado_info = [palabra, texto_ahorcado(palabra), 0]
             send_text_to_ui(ahorcado_info[1])
+            lbl_track.grid(column=0, row=3)
+            lbl_track.config(text=datos['ahorcado'][palabra_elegida]['pistas']['p1']+"\n"+datos['ahorcado'][palabra_elegida]['pistas']['p2'])
 
             while True:
                 texto_a_audio("Elige una letra")
-                mic_label.grid(column=0, row=2, pady=10)  
-                letra = enviar_voz()            
+                mic_label.grid(column=0, row=2, pady=10)
+                letra = enviar_voz()
                 mic_label.grid_forget()
-                
+
 
                 print("se obtuvo la letra: " + letra[0])
-                
+
                 send_text_to_ui(ahorcado_info[1])
                 yalas = set()
 
@@ -700,13 +721,12 @@ def execute_start_logic():
 
                     actualizaar_imagen_ahorcado(ahorcado_info[2])
 
-                    if ahorcado_info[2] == 6:
-                        texto_a_audio("perdiste")
-                        break
+                if ahorcado_info[2] == 6:
+                    lbl_track.config(text="PERDISTE")
+                    texto_a_audio("perdiste")
+                    break 
 
-    
-
-def actualizaar_imagen_ahorcado(contador): 
+def actualizaar_imagen_ahorcado(contador):
     nombre = "IMG/ahorcado" + str(contador + 1) + ".jpg"
     image = Image.open(nombre)
     image = image.resize((200, 300))
@@ -718,7 +738,7 @@ def texto_ahorcado(palabra):
 
     for i in range(len(palabra) - 1):
         cadena += "_ "
-    
+
     cadena += "_"
 
     return cadena
@@ -747,7 +767,7 @@ def cond(opcion):
                     return True
                 else:
                     return False
-                
+
 def enviar_voz():
     palabra = capturar_voz(recognizer, microphone)
     if not palabra["suceso"]:
@@ -761,29 +781,29 @@ def send_text_to_ui(text):
     root.after(0, update_ui)
 
 def update_ui():
-    
+
     try:
-        text = queue_main_to_ui.get_nowait() 
+        text = queue_main_to_ui.get_nowait()
         lbl_text.config(text=text)
-        
+
     except queue.Empty:
         pass
-    
+
     try:
         global photo
-        photo = image_queue.get_nowait()     
+        photo = image_queue.get_nowait()
         image_label.config(image = photo)
         print("de la ventana")
         print(root.winfo_reqwidth())
         print(photo.width())
-        
+
         image_label.grid(column=0, row=0, pady=20, padx=((800 - photo.width())/ 2))
 
 
 
-    except queue.Empty: 
+    except queue.Empty:
         pass
-        
+
     root.after(100, update_ui)
 
 def start():
@@ -797,13 +817,13 @@ main_thread.start()
 mic_image = ImageTk.PhotoImage(Image.open("IMG/mic_icon.png").resize((45, 45)))
 mic_label = tk.Label(root, image=mic_image, bd=0, width=45, height=45)
 
-btn_start = tk.Button(root, text="Iniciar", command=start, 
-                      font=("Arial", 12, "bold"), 
-                      bg="#ffffff", fg="#555555", 
-                      borderwidth=0, 
+btn_start = tk.Button(root, text="Iniciar", command=start,
+                      font=("Arial", 12, "bold"),
+                      bg="#ffffff", fg="#555555",
+                      borderwidth=0,
                       highlightthickness=0)
 
-btn_start.grid(column=0, row=2, pady=10)  
+btn_start.grid(column=0, row=2, pady=10)
 
 def on_enter(e):
     btn_start.config(font=("Arial", 14, "bold"))
@@ -813,6 +833,12 @@ def on_leave(e):
 
 btn_start.bind("<Enter>", on_enter)
 btn_start.bind("<Leave>", on_leave)
+
+lbl_track=tk.Label(root, text=" ", font=("Arial", 10, "bold"))
+lbl_track.config(bg="#262626",
+                 fg="#fefae4", # color mostaza
+                 font=("Oswald", 10, "bold"))
+# lbl_track.grid(column=0, row=2)
 
 # Run the main loop directly
 root.mainloop()

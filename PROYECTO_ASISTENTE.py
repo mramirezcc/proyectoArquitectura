@@ -7,7 +7,7 @@ import random
 import json
 from tkinter import messagebox
 from PIL import Image, ImageTk
-
+import random as rn
 
 
 

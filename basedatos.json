@@ -121,7 +121,7 @@
         "b) Programación orientada a objetos",
         "c) Programación estructurada " 
     ],
-    "P2_ RESPUESTA": "b",
+    "P2_RESPUESTA": "b",
     "P2_JUSTIFICACION": "La programación orientada a objetos modela entidades del mundo real como objetos con propiedades y métodos.",
     
     "PE_3": [
@@ -206,5 +206,15 @@
     ],
 
     "P10_RESPUESTA": "c",
-    "P10_JUSTIFICACION": "Las colas se usan en SO para gestionar procesos o hilos."
+    "P10_JUSTIFICACION": "Las colas se usan en SO para gestionar procesos o hilos.",
+
+    "ahorcado": {
+        "p1":{
+            "palabra":"herencia",
+            "pistas":{
+                "p1":"Mecanismo por el cual una clase permite heredar las características (atributos y métodos) de otra clase",
+                "p2":"Permite que se puedan definir nuevas clases basadas de unas ya existentes a fin de reutilizar el código"  
+            }
+        }
+    }
 }
