@@ -123,7 +123,7 @@ def texto_a_audio(text):
     engine.say(text)
     engine.runAndWait()
 
-def capturar_voz(reconocer, microfono, tiempo_ruido=0.5):
+def capturar_voz(reconocer, microfono, tiempo_ruido=0.1):
     with microfono as fuente:
         reconocer.adjust_for_ambient_noise(fuente, duration=tiempo_ruido)
         print("Escuchando...")
@@ -164,6 +164,7 @@ def execute_start_logic():
     texto_a_audio(
         "{} ahora voy a explicarte sobre las opciones que tiene este programa.".format(
             nombre))
+    
     #WHILE PARA REPETIR O CAMBIAR DE OPCIONES
     while True:
         texto_a_audio("Tienes estas opciones para escoger.")
@@ -265,7 +266,7 @@ def execute_start_logic():
                     texto_a_audio(datos['operadores'])
 
                 elif respuesta == "estructuras condicionales":
-                    image = Image.open("IMG/estructurasCoondicionales.png")
+                    image = Image.open("IMG/estructurasCondicionales.png")
                     image = image.resize((790, 450))
                     photo = ImageTk.PhotoImage(image)
                     send_text_to_ui("Estructuras condicionales")
@@ -325,7 +326,9 @@ def execute_start_logic():
 
                     while True:
 
+                        mic_label.grid(column=0, row=2, pady=10)
                         respuesta = enviar_voz()
+                        mic_label.grid_forget()
 
                         if respuesta == "no":
                             break
@@ -406,7 +409,9 @@ def execute_start_logic():
 
                     while True:
 
+                        mic_label.grid(column=0, row=2, pady=10)
                         respuesta = enviar_voz()
+                        mic_label.grid_forget()
 
                         if respuesta == "no":
                             break
@@ -490,19 +495,29 @@ def execute_start_logic():
             send_text_to_ui("Elegiste la opcion CUESTIONARIO.")
             texto_a_audio("Elegiste la opcion CUESTIONARIO.")
             texto_a_audio("Se te realizaran 10 preguntas y al final se te mostrara tu puntaje en conjunto de las justificaciones de las respuestas erroneas.")
-            send_text_to_ui("¿Empezamos?\n1) Si 2) No")
+            send_text_to_ui("¿Empezamos?\n1) Claro 2) No")
             texto_a_audio("¿Estas listo?")
 
+            mic_label.grid(column=0, row=2, pady=10)
             respuesta = enviar_voz()
-            if respuesta == "si":
+            mic_label.grid_forget()
+
+            if respuesta == "claro":
                 tus_respuestas = []
 
-                for i in range(10):
+                send_text_to_ui("Responde con una palabra que inicie con la letra de la opcion que quieras elejir")
+
+                for i in range(3):
                     preguntas(i+1)
-                    respuesta = enviar_voz()
+                    respuesta = "a"
                     ruta = "P"+str(i+1)+"_RESPUESTA"                
-                    comp(datos[ruta], respuesta)
+                    comp(datos[ruta], respuesta[0])
                 
+                image = Image.open("IMG/cuestionario.png")
+                image = image.resize((790, 450))
+                photo = ImageTk.PhotoImage(image)
+                image_queue.put(photo)
+
                 send_text_to_ui("Terminamos, veamos tus resultados...")
                 texto_a_audio("Terminamos, veamos tus resultados...")
 
@@ -543,13 +558,13 @@ def execute_start_logic():
                             msg = "debido a que" + datos["P"+str(i+1)+"_JUSTIFICACION"]
                             texto_a_audio(msg)
 
-            image = Image.open("IMG/cuestionario2.jpg")
+            image = Image.open("IMG/cuestionario.png")
             image = image.resize((790, 450))
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
 
+            send_text_to_ui("Bueno, eso es todo aqui, espero vuelvas para retar tus conocimientos.")
             texto_a_audio("Bueno, eso es todo aqui en cuestioanrio, espero vuelvas para retar tus conocimientos.")
-            send_text_to_ui("Bueno, eso es todo aqui en cuestioanrio, espero vuelvas para retar tus conocimientos.")
 
         elif respuesta == "juegos":
             image = Image.open("IMG/juegos.png")
@@ -561,8 +576,9 @@ def execute_start_logic():
             texto_a_audio("Elegiste la opcion JUEGOS.")
             send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
             texto_a_audio("Por el momento tenemos 2 juegos bastante divertidos, ¿cual te gustaria probar?")
-            
+
             while True:
+                
                 mic_label.grid(column=0, row=2, pady=10)
                 respuesta = enviar_voz()
                 mic_label.grid_forget()
@@ -602,67 +618,110 @@ def execute_start_logic():
                         if grid.user_cell == grid.goal_cell:
                             texto_a_audio("¡Felicidades, llegaste a tu destino!")
                             break
+                    
+                    canvas.destroy()
                 
                 elif respuesta == "ahorcados":
 
-                    image = Image.open("IMG/ahorcado1.jpg")
-                    image = image.resize((200, 300))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-
-                    send_text_to_ui("Empezamos con el juego")
-                    texto_a_audio("Empezamos con el juego")
-
-                    keys = list(datos["ahorcado"].keys())  
-
-                    palabra_elegida = random.choice(keys) 
-
-                    palabra = datos["ahorcado"][palabra_elegida]["palabra"]  
-
-                    print(palabra_elegida)
-
-                    ahorcado_info = [palabra, texto_ahorcado(palabra), 0]
-                    send_text_to_ui(ahorcado_info[1])
-                    lbl_track.grid(column=0, row=3)
-                    lbl_track.config(text=datos['ahorcado'][palabra_elegida]['pistas']['p1']+"\n"+datos['ahorcado'][palabra_elegida]['pistas']['p2'])
-
                     while True:
-                        texto_a_audio("Elige una letra")
-                        mic_label.grid(column=0, row=2, pady=10)
-                        letra = enviar_voz()
-                        mic_label.grid_forget()
+                        image = Image.open("IMG/ahorcado1.jpg")
+                        image = image.resize((200, 300))
+                        photo = ImageTk.PhotoImage(image)
+                        image_queue.put(photo)
 
+                        send_text_to_ui("Empezamos con el juego")
+                        texto_a_audio("Empezamos con el juego")
 
-                        print("se obtuvo la letra: " + letra[0])
+                        keys = list(datos["ahorcado"].keys())  
 
+                        palabra_elegida = random.choice(keys) 
+
+                        palabra = datos["ahorcado"][palabra_elegida]["palabra"]  
+
+                        print(palabra_elegida)
+
+                        ahorcado_info = [palabra, texto_ahorcado(palabra), 0]
                         send_text_to_ui(ahorcado_info[1])
+                        lbl_track.grid(column=0, row=3)
+                        lbl_track.config(text=datos['ahorcado'][palabra_elegida]['pistas']['p1']+"\n"+datos['ahorcado'][palabra_elegida]['pistas']['p2'])
                         yalas = set()
 
-                        yala = corroborar_letra(ahorcado_info, letra[0], yalas)
-                        if yala:
-                            texto_a_audio("Ya elegiste esa palabra")
-                        else:
-                            print("mi nueva cadena es")
-                            print(ahorcado_info[1])
+                        while True:
+                            texto_a_audio("Di una palabra que empiece por la letra que deseas elegir")
+                            mic_label.grid(column=0, row=2, pady=10)
+                            letra = enviar_voz()
+                            mic_label.grid_forget()
+
+
+                            print("se obtuvo la letra: " + letra[0])
+
                             send_text_to_ui(ahorcado_info[1])
 
-                            actualizaar_imagen_ahorcado(ahorcado_info[2])
+                            yala = corroborar_letra(ahorcado_info, letra[0], yalas)
+                            
+                            print("las letras que ya has elegido son:")
+                            for elemento in yalas:
+                                print(elemento)
 
-                        if ahorcado_info[2] == 6:
-                            lbl_track.config(text="PERDISTE")
-                            texto_a_audio("perdiste")
+
+                            if yala:
+                                texto_a_audio("Ya elegiste esa letra")
+                            else:
+                                print("mi nueva cadena es")
+                                print(ahorcado_info[1])
+                                send_text_to_ui(ahorcado_info[1])
+
+                                actualizaar_imagen_ahorcado(ahorcado_info[2])
+
+                            # ahorcado_info[2]
+                            if  6 == 6:
+                                lbl_track.config(text="PERDISTE")
+                                texto_a_audio("perdiste")
+                                break
+
+                            if verificar_victoria(ahorcado_info[1]):
+                                lbl_track.config(text="felicidades has ganado")
+                                break
+
+                        send_text_to_ui("1) Si 2) No")
+                        texto_a_audio("¿deseas jugar otra partida?")
+
+                        respuesta = ""
+
+                        while True:
+                            respuesta = enviar_voz()
+                            if respuesta == "no":
+                                break
+                            elif respuesta == "si":
+                                break
+                            else:
+                                texto_a_audio("elige una de las opciones")
+                        
+                        if respuesta == "no":
                             break
+                        elif respuesta == "si":
+                            continue
+
+                image = Image.open("IMG/juegos.png")
+                image = image.resize((790, 450))
+                photo = ImageTk.PhotoImage(image)
+                image_queue.put(photo)        
                 
                 send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
                 texto_a_audio("Bueno, ahora ¿cual te gustaria probar?")
+
+                send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
 
         elif respuesta == "salir":
             send_text_to_ui("Ha sido un gusto poder ayudarte, regresa pronto.")
             texto_a_audio("Ha sido un gusto poder ayudarte, regresa pronto.")
             break
 
-    root.quit()
-    root.destroy()
+def verificar_victoria(cadena):
+    if "_" not in cadena:
+        return True
+    return False
+
 
 def preguntas(i):    
     ruta = "IMG/P"+str(i)+".jpg"
@@ -693,6 +752,11 @@ def texto_ahorcado(palabra):
     return cadena
 
 def corroborar_letra(info, letra, yalas):
+
+    print("los elementos del conjunto en este momento son:")
+    for elemento in yalas:
+        print(elemento)
+
     if letra in yalas:
         return True
     elif letra in info[0]:
@@ -718,11 +782,16 @@ def cond(opcion):
                     return False
 
 def enviar_voz():
-    palabra = capturar_voz(recognizer, microphone)
-    if not palabra["suceso"]:
-        print("Algo no está bien. No puedo reconocer tu micrófono o no lo tienes enchufado. <", palabra["error"], ">")
-        texto_a_audio("Algo no está bien. No puedo reconocer tu micrófono o no lo tienes enchufado.")
-        exit(1)
+    while(True):
+        palabra = capturar_voz(recognizer, microphone)
+        if not palabra["suceso"]:
+            print("Algo no está bien. No puedo reconocer tu micrófono o no lo tienes enchufado. <", palabra["error"], ">")
+            texto_a_audio("Algo no está bien. No puedo reconocer tu micrófono o no lo tienes enchufado.")
+            exit(1)
+        if not palabra["mensaje"] == None:
+            break
+        else:
+            texto_a_audio("Repite la palabra")
     return palabra["mensaje"].lower()
 
 def send_text_to_ui(text):
