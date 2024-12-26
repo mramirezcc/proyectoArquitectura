@@ -1,21 +1,28 @@
 import speech_recognition as sr
 import pyttsx3
 import tkinter as tk
+#import tkinter.font as tkFont
 from PIL import Image, ImageTk
 import threading
 import queue
 import json
 import random
 
+defaultBgColor = "#3d6e82"
+defaultFgColor = "#5fa8b4"
+defaultFont = "Helvetica"
+
 recognizer = sr.Recognizer()
 microphone = sr.Microphone()
 engine = pyttsx3.init()
+engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_ES-MX_SABINA_11.0')
+
 
 root = tk.Tk()
 root.iconbitmap("IMG/icon.ico")
 root.geometry("800x600")
 root.title("ASISTENTE VIRTUAL")
-root.config(bg="#262626")
+root.config(bg=defaultBgColor)
 root.resizable(False, False) # deshabilita redimensionamiento
 root.maxsize(800, 600) # establece tamaño máximo
 root.minsize(800, 600)
@@ -101,19 +108,19 @@ image_queue = queue.Queue()
 
 # Initialize images/widgets globally
 image = Image.open("IMG/iaBackground.png")
-image = image.resize((790, 450))
+image = image.resize((750, 450))
 photo = ImageTk.PhotoImage(image)
 image_label = tk.Label(root, image = photo)
 
 print((root.winfo_reqwidth()))
-image_label.grid(column=0, row=0, pady=20, padx=((800 - photo.width())/ 2))
-image_label.config(bg="#262626")
+image_label.grid(column=0, row=0, pady=10, padx=((800 - photo.width())/ 2))
+image_label.config(bg=defaultBgColor)
 image_queue.put(photo)
 
-lbl_text = tk.Label(root, text="Haz click en el boton 'iniciar' para empezar", font=("Arial", 13, "bold"))
-lbl_text.config(bg="#262626",
-                fg="#fefae4", # color mostaza
-                font=("Oswald", 20, "bold"))
+lbl_text = tk.Label(root, text="Haz click en el boton 'Iniciar' para empezar", font=(defaultFont, 13, "bold"))
+lbl_text.config(bg=defaultBgColor,
+                fg=defaultFgColor,
+                font=(defaultFont, 20, "bold"))
 lbl_text.grid(column=0, row=1)
 
 with open('basedatos.json', encoding="utf-8") as archivo:
@@ -153,12 +160,13 @@ def execute_start_logic():
     send_text_to_ui("Bienvenid@")
     btn_start.grid_forget()
     texto_a_audio("Bienvenido")
-    send_text_to_ui("¿Comó te llamas?")
-    texto_a_audio("¿Comó te llamas?")
-    mic_label.grid(column=0, row=2, pady=10)
+    send_text_to_ui("¿Cómo te llamas?")
+    texto_a_audio("¿Cómo te llamas?")
+    mic_label.grid(column=0, row=2, pady=0)
     nombre = enviar_voz()
+    nombre = nombre.capitalize()
     mic_label.grid_forget()
-    send_text_to_ui("Hola " + nombre)
+    send_text_to_ui("¡Hola " + nombre + "!")
     texto_a_audio("Hola {}. Mucho gusto.".format(nombre))
     texto_a_audio(datos["bienvenida"])
     texto_a_audio(
@@ -175,7 +183,7 @@ def execute_start_logic():
         texto_a_audio("¿Qué opción eliges?")
         send_text_to_ui("¿Qué opción eliges?")
 
-        mic_label.grid(column=0, row=2, pady=10)  
+        mic_label.grid(column=0, row=2, pady=0)  
         respuesta = enviar_voz()
         mic_label.grid_forget()
 
@@ -226,7 +234,7 @@ def execute_start_logic():
                 photo = ImageTk.PhotoImage(image)
                 image_queue.put(photo)
                 texto_a_audio("¿Cual de estos te interesa? o Salir")
-                mic_label.grid(column=0, row=2, pady=10)
+                mic_label.grid(column=0, row=2, pady=0)
                 respuesta = enviar_voz()
                 mic_label.grid_forget()
 
@@ -326,7 +334,7 @@ def execute_start_logic():
 
                     while True:
 
-                        mic_label.grid(column=0, row=2, pady=10)
+                        mic_label.grid(column=0, row=2, pady=0)
                         respuesta = enviar_voz()
                         mic_label.grid_forget()
 
@@ -409,7 +417,7 @@ def execute_start_logic():
 
                     while True:
 
-                        mic_label.grid(column=0, row=2, pady=10)
+                        mic_label.grid(column=0, row=2, pady=0)
                         respuesta = enviar_voz()
                         mic_label.grid_forget()
 
@@ -498,7 +506,7 @@ def execute_start_logic():
             send_text_to_ui("¿Empezamos?\n1) Claro 2) No")
             texto_a_audio("¿Estas listo?")
 
-            mic_label.grid(column=0, row=2, pady=10)
+            mic_label.grid(column=0, row=2, pady=0)
             respuesta = enviar_voz()
             mic_label.grid_forget()
 
@@ -836,26 +844,26 @@ mic_image = ImageTk.PhotoImage(Image.open("IMG/mic_icon.png").resize((45, 45)))
 mic_label = tk.Label(root, image=mic_image, bd=0, width=45, height=45)
 
 btn_start = tk.Button(root, text="Iniciar", command=start,
-                      font=("Arial", 12, "bold"),
-                      bg="#ffffff", fg="#555555",
+                      font=(defaultFont, 20, "bold"),
+                      bg=defaultFgColor, fg=defaultBgColor,
                       borderwidth=0,
                       highlightthickness=0)
 
 btn_start.grid(column=0, row=2, pady=10)
 
 def on_enter(e):
-    btn_start.config(font=("Arial", 14, "bold"))
+    btn_start.config(font=(defaultFont, 20, "bold"), borderwidth=2, bg=defaultBgColor, fg=defaultFgColor)
 
 def on_leave(e):
-    btn_start.config(font=("Arial", 12, "bold"))
+    btn_start.config(font=(defaultFont, 20, "bold"), borderwidth=0, bg=defaultFgColor, fg=defaultBgColor)
 
 btn_start.bind("<Enter>", on_enter)
 btn_start.bind("<Leave>", on_leave)
 
-lbl_track=tk.Label(root, text=" ", font=("Arial", 10, "bold"))
-lbl_track.config(bg="#262626",
-                 fg="#fefae4", # color mostaza
-                 font=("Oswald", 10, "bold"))
+lbl_track=tk.Label(root, text=" ", font=(defaultFont, 10, "bold"))
+lbl_track.config(bg=defaultBgColor,
+                 fg=defaultFgColor, # color mostaza
+                 font=(defaultFont, 10, "bold"))
 # lbl_track.grid(column=0, row=2)
 
 # Run the main loop directly
