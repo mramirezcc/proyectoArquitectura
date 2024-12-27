@@ -117,7 +117,7 @@ image_label.grid(column=0, row=0, pady=10, padx=((800 - photo.width())/ 2))
 image_label.config(bg=defaultBgColor)
 image_queue.put(photo)
 
-lbl_text = tk.Label(root, text="Haz click en el boton 'Iniciar' para empezar", font=(defaultFont, 13, "bold"))
+lbl_text = tk.Label(root, text="Haz click en el boton 'Iniciar' para empezar", font=(defaultFont, 16, "bold"))
 lbl_text.config(bg=defaultBgColor,
                 fg=defaultFgColor,
                 font=(defaultFont, 20, "bold"))
@@ -630,85 +630,7 @@ def execute_start_logic():
                     canvas.destroy()
                 
                 elif respuesta == "ahorcados":
-
-                    while True:
-                        image = Image.open("IMG/ahorcado1.jpg")
-                        image = image.resize((200, 300))
-                        photo = ImageTk.PhotoImage(image)
-                        image_queue.put(photo)
-
-                        send_text_to_ui("Empezamos con el juego")
-                        texto_a_audio("Empezamos con el juego")
-
-                        keys = list(datos["ahorcado"].keys())  
-
-                        palabra_elegida = random.choice(keys) 
-
-                        palabra = datos["ahorcado"][palabra_elegida]["palabra"]  
-
-                        print(palabra_elegida)
-
-                        ahorcado_info = [palabra, texto_ahorcado(palabra), 0]
-                        send_text_to_ui(ahorcado_info[1])
-                        lbl_track.grid(column=0, row=3)
-                        lbl_track.config(text=datos['ahorcado'][palabra_elegida]['pistas']['p1']+"\n"+datos['ahorcado'][palabra_elegida]['pistas']['p2'])
-                        yalas = set()
-
-                        while True:
-                            texto_a_audio("Di una palabra que empiece por la letra que deseas elegir")
-                            mic_label.grid(column=0, row=2, pady=10)
-                            letra = enviar_voz()
-                            mic_label.grid_forget()
-
-
-                            print("se obtuvo la letra: " + letra[0])
-
-                            send_text_to_ui(ahorcado_info[1])
-
-                            yala = corroborar_letra(ahorcado_info, letra[0], yalas)
-                            
-                            print("las letras que ya has elegido son:")
-                            for elemento in yalas:
-                                print(elemento)
-
-
-                            if yala:
-                                texto_a_audio("Ya elegiste esa letra")
-                            else:
-                                print("mi nueva cadena es")
-                                print(ahorcado_info[1])
-                                send_text_to_ui(ahorcado_info[1])
-
-                                actualizaar_imagen_ahorcado(ahorcado_info[2])
-
-                            # ahorcado_info[2]
-                            if  6 == 6:
-                                lbl_track.config(text="PERDISTE")
-                                texto_a_audio("perdiste")
-                                break
-
-                            if verificar_victoria(ahorcado_info[1]):
-                                lbl_track.config(text="felicidades has ganado")
-                                break
-
-                        send_text_to_ui("1) Si 2) No")
-                        texto_a_audio("¿deseas jugar otra partida?")
-
-                        respuesta = ""
-
-                        while True:
-                            respuesta = enviar_voz()
-                            if respuesta == "no":
-                                break
-                            elif respuesta == "si":
-                                break
-                            else:
-                                texto_a_audio("elige una de las opciones")
-                        
-                        if respuesta == "no":
-                            break
-                        elif respuesta == "si":
-                            continue
+                    jugar_ahorcado()
 
                 image = Image.open("IMG/juegos.png")
                 image = image.resize((790, 450))
@@ -742,7 +664,7 @@ def preguntas(i):
     send_text_to_ui("Pregunta 0"+str(i)+"\nElige sabiamente...")
     texto_a_audio(datos[respuesta])
 
-def actualizaar_imagen_ahorcado(contador):
+def actualizar_imagen_ahorcado(contador):
     nombre = "IMG/ahorcado" + str(contador + 1) + ".jpg"
     image = Image.open(nombre)
     image = image.resize((200, 300))
@@ -759,26 +681,8 @@ def texto_ahorcado(palabra):
 
     return cadena
 
-def corroborar_letra(info, letra, yalas):
-
-    print("los elementos del conjunto en este momento son:")
-    for elemento in yalas:
-        print(elemento)
-
-    if letra in yalas:
-        return True
-    elif letra in info[0]:
-        mensaje = "la letra:" + letra + " si se encuentra en la palabra"
-        print(mensaje)
-        yalas.add(letra)
-        actualizar_cadena(info, letra)
-    else:
-        yalas.add(letra)
-        info[2] = info[2] + 1
-
-    return False
-
 def actualizar_cadena(info, letra):
+    """Actualiza la cadena mostrada con la letra correcta."""
     for i in range(len(info[0])):
         if info[0][i] == letra:
             info[1] = info[1][:(2 * i)] + letra + info[1][(2 * i + 1):]
@@ -788,6 +692,87 @@ def cond(opcion):
                     return True
                 else:
                     return False
+
+def jugar_ahorcado():
+    while True:
+        # Inicializar imagen inicial
+        actualizar_imagen_ahorcado(0)
+
+        send_text_to_ui("Empezamos con el juego")
+        texto_a_audio("Empezamos con el juego")
+
+        # Selección aleatoria de palabra
+        keys = list(datos["ahorcado"].keys())
+        palabra_elegida = random.choice(keys)
+        palabra = datos["ahorcado"][palabra_elegida]["palabra"]
+
+        print("Palabra elegida:", palabra_elegida)
+
+        # Configuración inicial
+        ahorcado_info = [palabra, texto_ahorcado(palabra), 0]  # [palabra, estado_actual, fallos]
+        send_text_to_ui(ahorcado_info[1])
+        lbl_track.grid(column=0, row=3)
+        lbl_track.config(text=datos['ahorcado'][palabra_elegida]['pistas']['p1'])
+
+        # Bucle de juego
+        while True:
+            texto_a_audio("Di una letra para intentar adivinar la palabra")
+            mic_label.grid(column=0, row=2, pady=10)
+            letra = enviar_voz()
+            mic_label.grid_forget()
+
+            if not letra or len(letra[0]) != 1:
+                texto_a_audio("Por favor, di una sola letra.")
+                continue
+
+            letra = letra[0].lower()
+            print("Se obtuvo la letra:", letra)
+
+            # Procesar la letra
+            if letra in ahorcado_info[1]:
+                texto_a_audio("Ya elegiste esa letra.")
+            elif letra in palabra:
+                texto_a_audio(f"La letra {letra} está en la palabra.")
+                actualizar_cadena(ahorcado_info, letra)
+            else:
+                texto_a_audio(f"La letra {letra} no está en la palabra.")
+                ahorcado_info[2] += 1
+
+            # Actualizar estado del juego
+            send_text_to_ui(ahorcado_info[1])
+            actualizar_imagen_ahorcado(ahorcado_info[2])
+
+            # Dar segunda pista si hay 3 fallos
+            if ahorcado_info[2] == 3:
+                lbl_track.config(text=(
+                    f"{datos['ahorcado'][palabra_elegida]['pistas']['p1']}\n"
+                    f"{datos['ahorcado'][palabra_elegida]['pistas']['p2']}"
+                ))
+
+            # Verificar estado del juego
+            if ahorcado_info[2] >= 6:  # Límite de 6 fallos
+                lbl_track.config(text=f"PERDISTE. La palabra era: {palabra}")
+                texto_a_audio(f"Perdiste. La palabra era {palabra}.")
+                break
+
+            if verificar_victoria(ahorcado_info[1]):
+                lbl_track.config(text="¡Felicidades, has ganado!")
+                texto_a_audio("¡Felicidades, has ganado!")
+                break
+
+        # Preguntar si se quiere jugar de nuevo
+        send_text_to_ui("1) Si 2) No")
+        texto_a_audio("¿Deseas jugar otra partida?")
+        while True:
+            respuesta = enviar_voz()
+            if respuesta in ["no", "si"]:
+                break
+            else:
+                texto_a_audio("Por favor, elige una de las opciones: sí o no.")
+
+        if respuesta == "no":
+            texto_a_audio("Gracias por jugar. ¡Hasta luego!")
+            break
 
 def enviar_voz():
     while(True):
@@ -860,10 +845,10 @@ def on_leave(e):
 btn_start.bind("<Enter>", on_enter)
 btn_start.bind("<Leave>", on_leave)
 
-lbl_track=tk.Label(root, text=" ", font=(defaultFont, 10, "bold"))
+lbl_track=tk.Label(root, text=" ", font=(defaultFont, 16, "bold"))
 lbl_track.config(bg=defaultBgColor,
                  fg=defaultFgColor, # color mostaza
-                 font=(defaultFont, 10, "bold"))
+                 font=(defaultFont, 16, "bold"))
 # lbl_track.grid(column=0, row=2)
 
 # Run the main loop directly

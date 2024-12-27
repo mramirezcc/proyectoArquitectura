@@ -209,11 +209,74 @@
     "P10_JUSTIFICACION": "Las colas se usan en SO para gestionar procesos o hilos.",
 
     "ahorcado": {
-        "p1":{
-            "palabra":"herencia",
-            "pistas":{
-                "p1":"Mecanismo por el cual una clase permite heredar las características (atributos y métodos) de otra clase",
-                "p2":"Permite que se puedan definir nuevas clases basadas de unas ya existentes a fin de reutilizar el código"  
+        "p1": {
+            "palabra": "metafora",
+            "pistas": {
+                "p1": "Recurso expresivo que sustituye una cosa por otra.",
+                "p2": "Usada comúnmente en poesía."
+            }
+        },
+        "p2": {
+            "palabra": "peninsula",
+            "pistas": {
+                "p1": "Tierra rodeada de agua en casi todos sus lados.",
+                "p2": "Está conectada a un área mayor."
+            }
+        },
+        "p3": {
+            "palabra": "oxigeno",
+            "pistas": {
+                "p1": "Gas presente en la atmósfera.",
+                "p2": "Indispensable para muchas formas de vida."
+            }
+        },
+        "p4": {
+            "palabra": "laberinto",
+            "pistas": {
+                "p1": "Un lugar con caminos confusos.",
+                "p2": "Asociado con perderse."
+            }
+        },
+        "p5": {
+            "palabra": "algebra",
+            "pistas": {
+                "p1": "Matemáticas con letras y números.",
+                "p2": "Se utiliza para resolver ecuaciones."
+            }
+        },
+        "p6": {
+            "palabra": "aurora",
+            "pistas": {
+                "p1": "Luces en el cielo nocturno.",
+                "p2": "Ocurren en regiones frías."
+            }
+        },
+        "p7": {
+            "palabra": "relampago",
+            "pistas": {
+                "p1": "Fenómeno eléctrico en el cielo.",
+                "p2": "Se ve antes del trueno."
+            }
+        },
+        "p8": {
+            "palabra": "templo",
+            "pistas": {
+                "p1": "Lugar de encuentro espiritual.",
+                "p2": "Relacionado con religiones."
+            }
+        },
+        "p9": {
+            "palabra": "estrategia",
+            "pistas": {
+                "p1": "Plan para alcanzar algo.",
+                "p2": "Requiere pensar antes de actuar."
+            }
+        },
+        "p10": {
+            "palabra": "fragancia",
+            "pistas": {
+                "p1": "Se percibe con el olfato.",
+                "p2": "Suele estar asociada a perfumes."
             }
         }
     }
