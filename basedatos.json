@@ -102,112 +102,108 @@
         }
     },
 
-
-    "PE_1": [
-
-        "Según la información presentada, ¿cuál es el objetivo principal de la programación?",
-            
-        "a) Automatizar tareas y resolver problemas mediante algoritmos",
-        "b) Crear aplicaciones móviles innovadoras",  
-        "c) Mejorar la interfaz de usuario de sitios web"
-
-    ],
-    "P1_RESPUESTA": "a",
-    "P1_JUSTIFICACION": "El objetivo principal de la programación es automatizar tareas y resolver problemas a través de algoritmos, no solo crear aplicaciones innovadoras o mejorar interfaces.",
-    
-    "PE_2": [
-        "¿Qué paradigma de programación permite representar entidades del mundo real?",
-        "a) Programación funcional",
-        "b) Programación orientada a objetos",
-        "c) Programación estructurada " 
-    ],
-    "P2_RESPUESTA": "b",
-    "P2_JUSTIFICACION": "La programación orientada a objetos modela entidades del mundo real como objetos con propiedades y métodos.",
-    
-    "PE_3": [
-        "¿Cuál de las siguientes NO es una estructura de datos válida?",
-        "a) Árbol",
-        "b) Cola",
-        "c) Montón",
-        "d) Arreglo"
-    ],
-    "P3_RESPUESTA": "c", 
-    "P3_JUSTIFICACION": "Montón no es una estructura de datos en programación, las demás sí lo son.",
-
-    "PE_4": [
-        "¿Para que sirven las variables en programacion?",
-        "a) Para almacenar datos que no cambian",
-        "b) Para realizar operaciones matematicas",
-        "c) Para almacenar datos que pueden modificarse durante la ejecucion de un programa"
-    ],
-
-    "P4_RESPUESTA": "c",
-    "P4_JUSTIFICACION": "Las variables almacenan datos que pueden cambiar durante la ejecución.",
-    
-    "PE_5": [
-        "¿Cual es la diferencia entre variables y constantes?",
-        "a) Ninguna, son lo mismo",
-        "b) Las variables mantienen un valor fijo", 
-        "c) Las constantes mantienen un valor fijo que no cambia"
-    ],
-
-    "P5_RESPUESTA": "c",
-    "P5_JUSTIFICACION": "Las constantes mantienen un valor fijo, las variables pueden modificarse.",
-    
-    "PE_6": [
-        "Menciona dos ejemplos de estructuras de datos",
-        "a) Colas y pilas",
-        "b) Arreglos y listas enlazadas",
-        "c) Arreglos y arboles",
-        "d) Matrices y grafos"
-    ],
-
-    "P6_RESPUESTA": "a",
-    "P6_JUSTIFICACION": "Colas y pilas son estructuras de datos válidas.",
-    
-    "PE_7": [
-        "¿Que es la programacion orientada a objetos?",
-        "a) Paradigma de programacion basado en modulos funcionales",
-        "b) Paradigma de programacion basado en algoritmos",
-        "c) Paradigma de programacion basado en objetos que emulan entidades reales con propiedades y metodos"
-    ],
-
-    "P7_RESPUESTA": "c",
-    "P7_JUSTIFICACION": "La POO modela entidades del mundo real como objetos con propiedades y métodos.",
-    
-    "PE_8": [
-        "Explica un uso tipico de una pila como estructura de datos",
-        "a) Administracion de memoria dinamica",
-        "b) Rehacer/deshacer en editores de texto",
-        "c) Almacenamiento temporal de datos",
-        "d) Comunicacion entre programas"
-    ],
-
-    "P8_RESPUESTA": "b",
-    "P8_JUSTIFICACION": "Las pilas se usan en editores de texto para rehacer/deshacer cambios.",
-    
-    "PE_9": [
-        "¿Para que sirven las estructuras condicionales en programacion?",
-        "a) Para generar numeros aleatorios",
-        "b) Para bifurcar el flujo del programa dependiendo de si una condicion es cierta o falsa",
-        "c) Para almacenar datos temporalmente",
-        "d) Para facilitar operaciones matematicas"
-    ],
-
-    "P9_RESPUESTA": "b",
-    "P9_JUSTIFICACION": "Las condicionales bifurcan el flujo si se cumple una condición.",
-    
-    "PE_10": [
-        "Menciona un caso de uso tipico para una cola como estructura de datos",
-        "a) Evaluador de expresiones matematicas",
-        "b) Autocompletado de palabras en un editor",
-        "c) Gestion de procesos e hilos en un sistema operativo",
-        "d) Animaciones en videojuegos"
-    ],
-
-    "P10_RESPUESTA": "c",
-    "P10_JUSTIFICACION": "Las colas se usan en SO para gestionar procesos o hilos.",
-
+"cuestionario": {
+        "pregunta1": {
+            "pregunta": "¿Cuál es el lenguaje de programación más usado en inteligencia artificial?",
+            "respuesta": "Python",
+            "opciones": ["Python", "Java", "C++", "JavaScript"]
+        },
+        "pregunta2": {
+            "pregunta": "¿Qué significa HTML?",
+            "respuesta": "HyperText Markup Language",
+            "opciones": ["HyperText Markup Language", "HyperLink and Text Markup Language", "Home Tool Markup Language", "HyperTool Markup Language"]
+        },
+        "pregunta3": {
+            "pregunta": "¿Cuál de los siguientes es un lenguaje de bajo nivel?",
+            "respuesta": "Ensablador",
+            "opciones": ["Python", "Java", "Ensablador", "HTML"]
+        },
+        "pregunta4": {
+            "pregunta": "¿Cuál es el resultado de 2 elevado a la potencia de 3?",
+            "respuesta": "8",
+            "opciones": ["6", "8", "9", "10"]
+        },
+        "pregunta5": {
+            "pregunta": "¿Qué es un algoritmo?",
+            "respuesta": "Un conjunto de pasos para resolver un problema",
+            "opciones": ["Un programa de software", "Un lenguaje de programación", "Un conjunto de pasos para resolver un problema", "Una base de datos"]
+        },
+        "pregunta6": {
+            "pregunta": "¿Qué significa CSS en desarrollo web?",
+            "respuesta": "Cascading Style Sheets",
+            "opciones": ["Cascading Style Sheets", "Creative Style Scripts", "Compact Style Syntax", "Cascading System Sheets"]
+        },
+        "pregunta7": {
+            "pregunta": "¿Qué tipo de estructura de datos es una pila?",
+            "respuesta": "LIFO",
+            "opciones": ["FIFO", "LIFO", "LILO", "FILO"]
+        },
+        "pregunta8": {
+            "pregunta": "¿Cuál es la base numérica del sistema binario?",
+            "respuesta": "2",
+            "opciones": ["2", "10", "8", "16"]
+        },
+        "pregunta9": {
+            "pregunta": "¿Quién es considerado el padre de la computación?",
+            "respuesta": "Alan Turing",
+            "opciones": ["Charles Babbage", "Alan Turing", "Ada Lovelace", "John von Neumann"]
+        },
+        "pregunta10": {
+            "pregunta": "¿Qué operador se usa para asignar un valor en Python?",
+            "respuesta": "=",
+            "opciones": ["==", "=", "->", ":"]
+        },
+        "pregunta11": {
+            "pregunta": "¿Qué significa IoT?",
+            "respuesta": "Internet of Things",
+            "opciones": ["Internet of Things", "Internet of Tools", "Information of Technology", "Integration of Technology"]
+        },
+        "pregunta12": {
+            "pregunta": "¿Cuál es el propósito principal del lenguaje SQL?",
+            "respuesta": "Gestionar bases de datos",
+            "opciones": ["Diseñar aplicaciones", "Gestionar bases de datos", "Crear gráficos", "Programar microcontroladores"]
+        },
+        "pregunta13": {
+            "pregunta": "¿Qué método de ordenamiento tiene una complejidad promedio de O(n log n)?",
+            "respuesta": "Quicksort",
+            "opciones": ["Bubble sort", "Quicksort", "Selection sort", "Insertion sort"]
+        },
+        "pregunta14": {
+            "pregunta": "¿Qué significa API?",
+            "respuesta": "Application Programming Interface",
+            "opciones": ["Application Programming Interface", "Automated Program Interface", "Advanced Programming Interaction", "Active Program Integration"]
+        },
+        "pregunta15": {
+            "pregunta": "¿Cuál de las siguientes estructuras de datos utiliza nodos?",
+            "respuesta": "Árbol",
+            "opciones": ["Array", "Árbol", "Pila", "Cola"]
+        },
+        "pregunta16": {
+            "pregunta": "¿Qué función en Python devuelve la longitud de una lista?",
+            "respuesta": "len()",
+            "opciones": ["len()", "length()", "size()", "count()"]
+        },
+        "pregunta17": {
+            "pregunta": "¿Qué tipo de lenguaje es Python?",
+            "respuesta": "Interpretado",
+            "opciones": ["Compilado", "Interpretado", "Ambos", "Ninguno"]
+        },
+        "pregunta18": {
+            "pregunta": "¿Qué comando en Git se usa para combinar ramas?",
+            "respuesta": "merge",
+            "opciones": ["branch", "merge", "commit", "checkout"]
+        },
+        "pregunta19": {
+            "pregunta": "¿Qué operador lógico devuelve verdadero si ambos operandos son verdaderos?",
+            "respuesta": "AND",
+            "opciones": ["AND", "OR", "NOT", "XOR"]
+        },
+        "pregunta20": {
+            "pregunta": "¿Qué se usa para crear instancias en programación orientada a objetos?",
+            "respuesta": "Clases",
+            "opciones": ["Métodos", "Clases", "Variables", "Interfaces"]
+        }
+    },
     "ahorcado": {
         "p1": {
             "palabra": "metafora",

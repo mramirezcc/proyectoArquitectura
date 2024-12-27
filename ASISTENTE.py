@@ -184,7 +184,7 @@ def execute_start_logic():
         # Mostrar cada opción en su propia fila
         lbl_opcion1 = tk.Label(
             root, text="Cuestionario",
-            font=("Helvetica", 16, "bold"), anchor="center", 
+            font=("Helvetica", 18, "bold"), anchor="center", 
             bg=defaultFgColor, fg=defaultBgColor,
             width=20,
         )
@@ -192,7 +192,7 @@ def execute_start_logic():
 
         lbl_opcion2 = tk.Label(
             root, text="Ahorcado",
-            font=("Helvetica", 16, "bold"), anchor="center",
+            font=("Helvetica", 18, "bold"), anchor="center",
             bg=defaultFgColor, fg=defaultBgColor,
             width=20, 
         )
@@ -200,7 +200,7 @@ def execute_start_logic():
 
         lbl_opcion3 = tk.Label(
             root, text="Laberinto",
-            font=("Helvetica", 16, "bold"), anchor="center",
+            font=("Helvetica", 18, "bold"), anchor="center",
             bg=defaultFgColor, fg=defaultBgColor,
             width=20
         )
@@ -208,7 +208,7 @@ def execute_start_logic():
 
         lbl_opcion4 = tk.Label(
             root, text="Globos",
-            font=("Helvetica", 16, "bold"), anchor="center",
+            font=("Helvetica", 18, "bold"), anchor="center",
             bg=defaultFgColor, fg=defaultBgColor,
             width=20
         )
@@ -216,7 +216,7 @@ def execute_start_logic():
 
         lbl_opcion5 = tk.Label(
             root, text="Salir",
-            font=("Helvetica", 16, "bold"), anchor="center",
+            font=("Helvetica", 18, "bold"), anchor="center",
             bg=defaultFgColor, fg=defaultBgColor,
             width=20
         )
@@ -240,93 +240,8 @@ def execute_start_logic():
         lbl_opcion5.grid_forget()
 
         if respuesta == "cuestionario":
-            print ("Cuestionario")
-
-            def comp(solucion, rpta):
-                if rpta == solucion:
-                    tus_respuestas.append(1)
-                else:
-                    tus_respuestas.append(0)
-
-            image = Image.open("IMG/cuestionario.png")
-            image = image.resize((750, 425))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-
-            send_text_to_ui("Elegiste la opcion CUESTIONARIO.")
-            texto_a_audio("Elegiste la opcion CUESTIONARIO.")
-            texto_a_audio("Se te realizaran 10 preguntas y al final se te mostrara tu puntaje en conjunto de las justificaciones de las respuestas erroneas.")
-            send_text_to_ui("¿Empezamos?\n1) Claro 2) No")
-            texto_a_audio("¿Estas listo?")
-
-            mic_label.grid(column=0, row=2, pady=0)
-            respuesta = enviar_voz()
-            mic_label.grid_forget()
-
-            if respuesta == "claro":
-                tus_respuestas = []
-
-                send_text_to_ui("Responde con una palabra que inicie con la letra de la opcion que quieras elejir")
-
-                for i in range(3):
-                    preguntas(i+1)
-                    respuesta = "a"
-                    ruta = "P"+str(i+1)+"_RESPUESTA"                
-                    comp(datos[ruta], respuesta[0])
-                
-                image = Image.open("IMG/cuestionario.png")
-                image = image.resize((790, 450))
-                photo = ImageTk.PhotoImage(image)
-                image_queue.put(photo)
-
-                send_text_to_ui("Terminamos, veamos tus resultados...")
-                texto_a_audio("Terminamos, veamos tus resultados...")
-
-                calificacion = 0
-
-                for punto in tus_respuestas:
-                    if punto == 1:
-                        calificacion = calificacion + 1
-
-                msg = "Tu puntuacion ha sido de "+ str(calificacion) + " sobre 10."
-                send_text_to_ui(msg)
-                texto_a_audio(msg)
-
-                if calificacion == 10:
-                    send_text_to_ui("Lo has hecho fenomenal. Sigue asi")
-                    texto_a_audio("Lo has hecho fenomenal. Sigue asi")
-                else:
-                    if calificacion > 5:
-                        send_text_to_ui("Aún estas en camino pero pronto serás todo un genio.")
-                        texto_a_audio("Aún estas en camino pero pronto serás todo un genio.")
-                    else:
-                        send_text_to_ui("No te rindas, se que puedes lograrlo.")
-                        texto_a_audio("No te rindas, se que puedes lograrlo.")
-
-                    send_text_to_ui("Has fallado en las siguiente preguntas:")
-                    texto_a_audio("Has fallado en las siguiente preguntas:")
-
-                    for i, elemento in enumerate(tus_respuestas):
-                        if elemento == 0:
-                            ruta = "IMG/P"+str(i+1)+".jpg"
-                            image = Image.open(ruta)
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            msg = "Pregunta " + str(i+1) + "\nEsta es la Respuesta Correcta:" + datos["P"+str(i+1)+"_RESPUESTA"]
-                            send_text_to_ui(msg)
-                            texto_a_audio(msg)
-                            msg = "debido a que" + datos["P"+str(i+1)+"_JUSTIFICACION"]
-                            texto_a_audio(msg)
-
-            image = Image.open("IMG/cuestionario.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-
-            send_text_to_ui("Bueno, eso es todo aqui, espero vuelvas para retar tus conocimientos.")
-            texto_a_audio("Bueno, eso es todo aqui en cuestioanrio, espero vuelvas para retar tus conocimientos.")
-
+            jugar_cuestionario()
+            
         elif respuesta == "ahorcado":
             jugar_ahorcado()
         
@@ -515,6 +430,154 @@ def jugar_ahorcado():
         if respuesta == "no":
             texto_a_audio("Gracias por jugar. ¡Hasta luego!")
             break
+
+def jugar_cuestionario():
+    image = Image.open("IMG/cuestionario.png")
+    image = image.resize((750, 425))
+    photo = ImageTk.PhotoImage(image)
+    image_queue.put(photo)
+
+    #send_text_to_ui("Elegiste la opcion CUESTIONARIO.")
+    lbl_aux = tk.Label(
+        root,
+        text=f"¡Correcto!",
+        font=("Helvetica", 18, "bold"),
+        anchor="center",
+        bg=defaultBgColor,
+        fg=defaultFgColor,
+        width=20,
+        wraplength=700,
+        justify="center",
+    )
+    lbl_aux.grid(column=0, row=1, pady=5, sticky="ew")
+    lbl_aux.grid_forget()
+    texto_a_audio("Elegiste la opcion CUESTIONARIO.")
+    texto_a_audio("Se te realizaran 10 preguntas y al final se te mostrara tu puntaje")
+    texto_a_audio("Comencemos")
+
+    image = Image.open("IMG/cuestionarioUpper.png")
+    image = image.resize((750, 200))
+    photo = ImageTk.PhotoImage(image)
+    image_queue.put(photo)
+
+    # Inicializar contador de aciertos
+    aciertos = 0
+    total_preguntas = 10  # Número de preguntas que se realizarán
+    preguntas_realizadas = 0
+
+    # Obtener todas las preguntas del conjunto de datos
+    preguntas = list(datos["cuestionario"].keys())
+
+    # Loop para realizar el cuestionario
+    while preguntas_realizadas < total_preguntas:
+        # Seleccionar una pregunta al azar
+        pregunta_key = random.choice(preguntas)
+        pregunta_info = datos["cuestionario"][pregunta_key]
+        pregunta_texto = pregunta_info["pregunta"]
+        respuesta_correcta = pregunta_info["respuesta"]
+        opciones = pregunta_info["opciones"]  # Lista de posibles respuestas
+
+        # Mezclar las opciones
+        opciones_mezcladas = random.sample(opciones, len(opciones))
+
+        # Mostrar la pregunta y las opciones
+        texto_a_audio("Pregunta:")
+        #send_text_to_ui(f"Pregunta {preguntas_realizadas + 1}: {pregunta_texto}")
+        lbl_pregunta = tk.Label(
+            root,
+            text=f"Pregunta {preguntas_realizadas+1}: {pregunta_texto}",
+            font=("Helvetica", 18, "bold"),
+            anchor="center",
+            bg=defaultBgColor,
+            fg=defaultFgColor,
+            width=20,
+            wraplength=700,
+            justify="center",
+        )
+        lbl_pregunta.grid(column=0, row=1, pady=5, sticky="ew")
+        texto_a_audio(pregunta_texto)
+
+        # Crear labels para las opciones
+        labels_opciones = []
+        letras_opciones = ["a", "b", "c", "d", "e"]
+        for i, opcion in enumerate(opciones_mezcladas):
+            letra = letras_opciones[i]
+            lbl_opcion = tk.Label(
+                root,
+                text=f"{letra}) {opcion}",
+                font=("Helvetica", 16, "bold"),
+                anchor="center",
+                bg=defaultFgColor,
+                fg=defaultBgColor,
+                width=20
+            )
+            lbl_opcion.grid(column=0, row=i + 2, pady=5, sticky="ew")
+            labels_opciones.append(lbl_opcion)
+
+            # Audio para cada opción
+            texto_a_audio(f"Opción {letra}: {opcion}")
+
+        # Esperar respuesta por voz
+        texto_a_audio("¿Cuál es tu respuesta?")
+        mic_label.grid(column=0, row=len(opciones_mezcladas) + 2, pady=10)
+        respuesta = enviar_voz()[0]
+        mic_label.grid_forget()
+
+        # Ocultar las opciones después de responder
+        for lbl_opcion in labels_opciones:
+            lbl_opcion.grid_forget()
+        lbl_pregunta.grid_forget()
+    
+        # Validar la respuesta
+        if respuesta in letras_opciones:
+            indice_respuesta = letras_opciones.index(respuesta)
+            if opciones_mezcladas[indice_respuesta] == respuesta_correcta:
+                texto_a_audio("¡Correcto!")
+                
+                texto_a_audio("Pregunta:")
+                lbl_aux = tk.Label(
+                    root,
+                    text=f"¡Correcto!",
+                    font=("Helvetica", 18, "bold"),
+                    anchor="center",
+                    bg=defaultBgColor,
+                    fg=defaultFgColor,
+                    width=20,
+                    wraplength=700,
+                    justify="center",
+                )
+                lbl_aux.grid(column=0, row=1, pady=5, sticky="ew")
+                lbl_aux.grid_forget()
+
+                aciertos += 1
+            else:
+                texto_a_audio(f"Incorrecto. La respuesta correcta era: {respuesta_correcta}")
+                lbl_aux = tk.Label(
+                    root,
+                    text=f"Incorrecto. La respuesta correcta era: {respuesta_correcta}",
+                    font=("Helvetica", 18, "bold"),
+                    anchor="center",
+                    bg=defaultBgColor,
+                    fg=defaultFgColor,
+                    width=20,
+                    wraplength=700,
+                    justify="center",
+                )
+                lbl_aux.grid(column=0, row=1, pady=5, sticky="ew")
+                lbl_aux.grid_forget()
+        else:
+            send_text_to_ui("Por favor, elige una letra válida.")
+            texto_a_audio("Por favor, di una letra válida.")
+            send_text_to_ui("")
+            continue  # Repetir esta pregunta
+
+        # Actualizar preguntas realizadas
+        preguntas_realizadas += 1
+        preguntas.remove(pregunta_key)
+
+    # Mostrar puntuación final
+    texto_a_audio(f"Cuestionario terminado. Obtuviste {aciertos} de {total_preguntas} aciertos.")
+    send_text_to_ui(f"Cuestionario terminado. Puntuación: {aciertos}/{total_preguntas}")
 
 def enviar_voz():
     while(True):
