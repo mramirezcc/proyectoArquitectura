@@ -206,13 +206,13 @@ def execute_start_logic():
         )
         lbl_opcion3.grid(column=0, row=4, pady=5, sticky="ew")
 
-        lbl_opcion4 = tk.Label(
+        """lbl_opcion4 = tk.Label(
             root, text="Globos",
             font=("Helvetica", 18, "bold"), anchor="center",
             bg=defaultFgColor, fg=defaultBgColor,
             width=20
         )
-        lbl_opcion4.grid(column=0, row=5, pady=5, sticky="ew")
+        lbl_opcion4.grid(column=0, row=5, pady=5, sticky="ew")"""
 
         lbl_opcion5 = tk.Label(
             root, text="Salir",
@@ -220,11 +220,11 @@ def execute_start_logic():
             bg=defaultFgColor, fg=defaultBgColor,
             width=20
         )
-        lbl_opcion5.grid(column=0, row=6, pady=5, sticky="ew")
+        lbl_opcion5.grid(column=0, row=5, pady=5, sticky="ew")
 
         # Información adicional por voz
         texto_a_audio(
-            "Las opciones son: Cuestionario, Ahorcado, Laberinto y Globos. "
+            "Las opciones son: Cuestionario, Ahorcado y Laberinto"
             "Por favor, di la opción que deseas elegir."
         )
         send_text_to_ui("¿Qué opción eliges?")
@@ -237,7 +237,6 @@ def execute_start_logic():
         lbl_opcion1.grid_forget()
         lbl_opcion2.grid_forget()
         lbl_opcion3.grid_forget()
-        lbl_opcion4.grid_forget()
         lbl_opcion5.grid_forget()
 
         if respuesta == "cuestionario":
@@ -246,12 +245,13 @@ def execute_start_logic():
         elif respuesta == "ahorcado":
             jugar_ahorcado()
         
-        elif respuesta == "laberinto de instrucciones":
+        elif respuesta == "laberinto":
             image = Image.open("IMG/fondolaberinto.jpg")
             image = image.resize((790, 450))
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
-
+            
+            texto_a_audio("Dirige el cuadro verde hacia el cuadro rojo")
             canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
             canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
 
@@ -259,10 +259,9 @@ def execute_start_logic():
 
             while True:
                 send_text_to_ui("Escuchando tus indicaciones...")
-                texto_a_audio("Escuchando tus indicaciones...")
                 mic_label.grid(column=0, row=2, pady=10)                
                 respuesta = enviar_voz()
-                mic_label.grid_forget();
+                mic_label.grid_forget()
                 if respuesta == "arriba":
                     grid.move_up(None)
                 elif respuesta == "abajo":
@@ -283,7 +282,7 @@ def execute_start_logic():
         elif respuesta == "salir":
             send_text_to_ui("Ha sido un gusto poder ayudarte, regresa pronto.")
             texto_a_audio("Ha sido un gusto poder ayudarte, regresa pronto.")
-            break
+            return
 
         """image = Image.open("IMG/juegos.png")
         image = image.resize((790, 450))
@@ -343,6 +342,7 @@ def jugar_ahorcado():
         actualizar_imagen_ahorcado(0)
 
         send_text_to_ui("Empezamos con el juego")
+        texto_a_audio("Debido a que mi sistema no reconoce bien letras solas, las opciones se eligen con la inicial de la palabra que digas")
         texto_a_audio("Empezamos con el juego")
 
         # Selección aleatoria de palabra
@@ -454,7 +454,7 @@ def jugar_cuestionario():
     lbl_aux.grid_forget()
     texto_a_audio("Elegiste la opcion CUESTIONARIO.")
     texto_a_audio("Se te realizaran 10 preguntas y al final se te mostrara tu puntaje")
-    texto_a_audio("Comencemos")
+    texto_a_audio("Debido a que mi sistema no reconoce bien letras solas, las opciones se eligen con la inicial de la palabra que digas... Comencemos")
 
     image = Image.open("IMG/cuestionarioUpper.png")
     image = image.resize((750, 200))
