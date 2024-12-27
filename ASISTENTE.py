@@ -295,22 +295,10 @@ def verificar_victoria(cadena):
         return True
     return False
 
-
-def preguntas(i):    
-    ruta = "IMG/P"+str(i)+".jpg"
-    image = Image.open(ruta)
-    image = image.resize((790, 450))
-    photo = ImageTk.PhotoImage(image)
-    image_queue.put(photo)
-
-    respuesta = "PE_"+str(i)
-    send_text_to_ui("Pregunta 0"+str(i)+"\nElige sabiamente...")
-    texto_a_audio(datos[respuesta])
-
 def actualizar_imagen_ahorcado(contador):
     nombre = "IMG/ahorcado" + str(contador + 1) + ".png"
     image = Image.open(nombre)
-    image = image.resize((200, 350))
+    image = image.resize((200, 300))
     photo = ImageTk.PhotoImage(image)
     image_queue.put(photo)
 
@@ -360,7 +348,7 @@ def jugar_ahorcado():
 
         # Bucle de juego
         while True:
-            texto_a_audio("Di una letra para intentar adivinar la palabra")
+            texto_a_audio("Di una palabra que empiece por la letra que elijas para intentar adivinar la palabra")
             mic_label.grid(column=0, row=2, pady=10)
             letra = enviar_voz()
             mic_label.grid_forget()
