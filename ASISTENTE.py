@@ -107,7 +107,7 @@ queue_main_to_ui = queue.Queue()
 image_queue = queue.Queue()
 
 # Initialize images/widgets globally
-image = Image.open("IMG/iaBackground.png")
+image = Image.open("IMG/background.png")
 image = image.resize((750, 450))
 photo = ImageTk.PhotoImage(image)
 image_label = tk.Label(root, image = photo)
@@ -170,323 +170,76 @@ def execute_start_logic():
     texto_a_audio("Hola {}. Mucho gusto.".format(nombre))
     texto_a_audio(datos["bienvenida"])
     texto_a_audio(
-        "{} ahora voy a explicarte sobre las opciones que tiene este programa.".format(
+        "{}, por ahora este programa incluye estos juegos:".format(
             nombre))
     
     #WHILE PARA REPETIR O CAMBIAR DE OPCIONES
     while True:
-        texto_a_audio("Tienes estas opciones para escoger.")
-        send_text_to_ui("1) Aprendizaje   2) Cuestionario    3) Juegos   4) Salir")
-        texto_a_audio("Aprendizaje. Cuestionario. Juegos.")
+        image = Image.open("IMG/upperBackground.png")
+        image = image.resize((750, 142))
+        photo = ImageTk.PhotoImage(image)
+        image_queue.put(photo)
+        send_text_to_ui("Opciones disponibles:")
+
+        # Mostrar cada opción en su propia fila
+        lbl_opcion1 = tk.Label(
+            root, text="Cuestionario",
+            font=("Helvetica", 16, "bold"), anchor="center", 
+            bg=defaultFgColor, fg=defaultBgColor,
+            width=20,
+        )
+        lbl_opcion1.grid(column=0, row=2, pady=5, sticky="ew")
+
+        lbl_opcion2 = tk.Label(
+            root, text="Ahorcado",
+            font=("Helvetica", 16, "bold"), anchor="center",
+            bg=defaultFgColor, fg=defaultBgColor,
+            width=20, 
+        )
+        lbl_opcion2.grid(column=0, row=3, pady=5, sticky="ew")
+
+        lbl_opcion3 = tk.Label(
+            root, text="Laberinto",
+            font=("Helvetica", 16, "bold"), anchor="center",
+            bg=defaultFgColor, fg=defaultBgColor,
+            width=20
+        )
+        lbl_opcion3.grid(column=0, row=4, pady=5, sticky="ew")
+
+        lbl_opcion4 = tk.Label(
+            root, text="Globos",
+            font=("Helvetica", 16, "bold"), anchor="center",
+            bg=defaultFgColor, fg=defaultBgColor,
+            width=20
+        )
+        lbl_opcion4.grid(column=0, row=5, pady=5, sticky="ew")
+
+        lbl_opcion5 = tk.Label(
+            root, text="Salir",
+            font=("Helvetica", 16, "bold"), anchor="center",
+            bg=defaultFgColor, fg=defaultBgColor,
+            width=20
+        )
+        lbl_opcion5.grid(column=0, row=6, pady=5, sticky="ew")
+
+        # Información adicional por voz
         texto_a_audio(
-            "La opción Aprendizaje es donde podrás aprender todo con respecto a Programación. La opción Cuestionario es donde podrás poner en práctica lo que aprendiste mediante preguntas. Y por último, la tercer opción, es Juegos, donde también podrás poner en acción lo que aprendiste jugando.")
-        texto_a_audio("¿Qué opción eliges?")
+            "Las opciones son: Cuestionario, Ahorcado, Laberinto y Globos. "
+            "Por favor, di la opción que deseas elegir."
+        )
         send_text_to_ui("¿Qué opción eliges?")
 
-        mic_label.grid(column=0, row=2, pady=0)  
+        # Esperar respuesta por voz
+        mic_label.grid(column=0, row=7, pady=10)
         respuesta = enviar_voz()
         mic_label.grid_forget()
+        lbl_opcion1.grid_forget()
+        lbl_opcion2.grid_forget()
+        lbl_opcion3.grid_forget()
+        lbl_opcion4.grid_forget()
+        lbl_opcion5.grid_forget()
 
-        if respuesta == "aprendizaje":
-
-            image = Image.open("IMG/introduccionProgramacion.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-
-            send_text_to_ui("Elegiste la opcion APRENDIZAJE.")
-            texto_a_audio("Elegiste la opcion APRENDIZAJE.")
-            texto_a_audio("Muy bien antes de empezar quisiera hacer una introduccion a el tema conocido como Programación.")
-
-            image = Image.open("IMG/definicion.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-            send_text_to_ui("Definicion de PROGRAMACION.")
-            texto_a_audio(datos['definicion'])
-
-            image = Image.open("IMG/importancia.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-            send_text_to_ui("IMPORTANCIA.")
-            texto_a_audio(datos['importancia'])
-
-            image = Image.open("IMG/razones.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-            send_text_to_ui("RAZONES.")
-            texto_a_audio(datos['razones'])
-
-            image = Image.open("IMG/conceptos.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-            texto_a_audio("Como se puede apreciar en la imagen, la Programación contiene varios aspectos y caracteristicas importantes, tales como:")
-            send_text_to_ui("Conceptos de Programacion.")
-            texto_a_audio("Variables. Constantes. Tipos de datos. Operadores. Estructuras condicionales. Bucles. Funciones. Compiladores. Depuración. Algoritmos. Estructuras de datos. Programación Orientada a Objetos (POO).")
-
-            while True:
-
-                image = Image.open("IMG/conceptos.png")
-                image = image.resize((790, 450))
-                photo = ImageTk.PhotoImage(image)
-                image_queue.put(photo)
-                texto_a_audio("¿Cual de estos te interesa? o Salir")
-                mic_label.grid(column=0, row=2, pady=0)
-                respuesta = enviar_voz()
-                mic_label.grid_forget()
-
-                if respuesta == "salir":
-                    break
-
-                if respuesta == "variables":
-                    image = Image.open("IMG/variables.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-                    send_text_to_ui("Variables")
-                    texto_a_audio(datos['variables'])
-
-                elif respuesta == "constantes":
-                    image = Image.open("IMG/constantes.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-                    send_text_to_ui("Constantes")
-                    texto_a_audio(datos['constantes'])
-
-                elif respuesta == "tipos de datos":
-                    image = Image.open("IMG/tiposDatos.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Tipos de Datos")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['tipos_de_datos'])
-
-                elif respuesta == "operadores":
-                    image = Image.open("IMG/operadores.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Operadores")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['operadores'])
-
-                elif respuesta == "estructuras condicionales":
-                    image = Image.open("IMG/estructurasCondicionales.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Estructuras condicionales")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['estructuras_condicionales'])
-
-                elif respuesta == "bucles":
-                    image = Image.open("IMG/bucles.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Bucles")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['bucles'])
-
-                elif respuesta == "funciones":
-                    image = Image.open("IMG/funciones.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Funciones")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['funciones'])
-
-                elif respuesta == "compiladores":
-                    image = Image.open("IMG/compiladores.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Compiladores")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['compiladores'])
-
-                elif respuesta == "depuracion":
-                    image = Image.open("IMG/depuradores.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Depuracion")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['depuracion'])
-
-                elif respuesta == "algoritmos":
-                    image = Image.open("IMG/algoritmos.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    send_text_to_ui("Algoritmos")
-                    image_queue.put(photo)
-                    texto_a_audio(datos['algoritmos'])
-
-                elif respuesta == "estructuras de datos":
-                    image = Image.open("IMG/estructurasDatos.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-                    send_text_to_ui("Estructuras de datos:")
-                    texto_a_audio(datos['estructuras_de_datos']['definicion'])
-                    texto_a_audio("existen distintos tipos de estructura, aqui te mostrare 5 de ellas.")
-                    send_text_to_ui("1) Arreglos 2) Listas enlazadas 3) Pilas 4) Colas 5) Hash\n¿Por cual deseas empezar?")
-                    texto_a_audio("¿Por cual deseas empezar?")
-
-                    while True:
-
-                        mic_label.grid(column=0, row=2, pady=0)
-                        respuesta = enviar_voz()
-                        mic_label.grid_forget()
-
-                        if respuesta == "no":
-                            break
-
-                        if respuesta == "arreglos":
-                            image = Image.open("IMG/array.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Arrays:")
-                            texto_a_audio(datos['estructuras_de_datos']['arreglos']['descripcion'])
-                            texto_a_audio("aqui te presentamos ventajas y desventajas de este tipo de estructura. Ventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['arreglos']['ventajas'])
-                            texto_a_audio("Desventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['arreglos']['desventajas'])
-
-                        elif respuesta == "listas enlazadas":
-                            image = Image.open("IMG/linkedList.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Lista enlazadas:")
-                            texto_a_audio(datos['estructuras_de_datos']['listas_enlazadas']['descripcion'])
-                            texto_a_audio("aqui te presentamos ventajas y desventajas de este tipo de estructura. Ventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['listas_enlazadas']['ventajas'])
-                            texto_a_audio("Desventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['listas_enlazadas']['desventajas'])
-
-                        elif respuesta == "pilas":
-                            image = Image.open("IMG/pila.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Pilas:")
-                            texto_a_audio(datos['estructuras_de_datos']['pilas']['descripcion'])
-                            texto_a_audio("aqui te presentamos ventajas y desventajas de este tipo de estructura. Ventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['pilas']['ventajas'])
-                            texto_a_audio("Desventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['pilas']['desventajas'])
-
-                        elif respuesta == "colas":
-                            image = Image.open("IMG/colas.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Colas:")
-                            texto_a_audio(datos['estructuras_de_datos']['colas']['descripcion'])
-                            texto_a_audio("aqui te presentamos ventajas y desventajas de este tipo de estructura. Ventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['colas']['ventajas'])
-                            texto_a_audio("Desventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['colas']['desventajas'])
-
-                        elif respuesta == "hash":
-                            image = Image.open("IMG/hash.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Hash:")
-                            texto_a_audio(datos['estructuras_de_datos']['hash']['descripcion'])
-                            texto_a_audio("aqui te presentamos ventajas y desventajas de este tipo de estructura. Ventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['hash']['ventajas'])
-                            texto_a_audio("Desventajas:")
-                            texto_a_audio(datos['estructuras_de_datos']['hash']['desventajas'])
-
-                        send_text_to_ui("¿Deseas saber sobre otra estructura?\n1) Arreglos 2) Listas enlazadas 3) Pilas 4) Colas 5) Hash 6) No")
-                        texto_a_audio("¿Deseas saber sobre otra estructura?")
-
-                elif respuesta == "programacion orientada a objetos":
-                    image = Image.open("IMG/poo.png")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-                    send_text_to_ui("Programacion Orientada a Objetos:")
-                    texto_a_audio(datos['POO']['definicion'])
-                    texto_a_audio("existen distintos conceptos importantes en Programacion Orientada a objetos, aqui te mostrare 5 de ellas.")
-                    send_text_to_ui("1) Clases 2) Objetos 3) Herencia 4) Polimorfismo 5) Encapsulamiento\n¿Por cual deseas empezar?")
-                    texto_a_audio("¿Por cual deseas empezar?")
-
-                    while True:
-
-                        mic_label.grid(column=0, row=2, pady=0)
-                        respuesta = enviar_voz()
-                        mic_label.grid_forget()
-
-                        if respuesta == "no":
-                            break
-
-                        if respuesta == "clases":
-                            image = Image.open("IMG/clases.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Clases:")
-                            texto_a_audio(datos['POO']['clases']['definicion'])
-                            texto_a_audio("Observa el ejemplo")
-                            texto_a_audio(datos['POO']['arrays']['ejemplo'])
-
-                        elif respuesta == "objetos":
-                            image = Image.open("IMG/objetos.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Objetos:")
-                            texto_a_audio(datos['POO']['objetos']['definicion'])
-                            texto_a_audio("Observa el ejemplo")
-                            texto_a_audio(datos['POO']['objetos']['ejemplo'])
-
-                        elif respuesta == "herencia":
-                            image = Image.open("IMG/herencia.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Herencia:")
-                            texto_a_audio(datos['POO']['herencia']['definicion'])
-                            texto_a_audio("Observa el ejemplo")
-                            texto_a_audio(datos['POO']['herencia']['ejemplo'])
-
-                        elif respuesta == "polimorfismo":
-                            image = Image.open("IMG/polimorfismo.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Polimorfismo:")
-                            texto_a_audio(datos['POO']['polimorfismo']['definicion'])
-                            texto_a_audio("Observa el ejemplo")
-                            texto_a_audio(datos['POO']['polimorfismo']['ejemplo'])
-
-                        elif respuesta == "encapsulamiento":
-                            image = Image.open("IMG/encapsulamiento.png")
-                            image = image.resize((790, 450))
-                            photo = ImageTk.PhotoImage(image)
-                            image_queue.put(photo)
-                            send_text_to_ui("Encapsulamiento:")
-                            texto_a_audio(datos['POO']['encapsulamiento']['definicion'])
-                            texto_a_audio("Observa el ejemplo")
-                            texto_a_audio(datos['POO']['encapsulamiento']['ejemplo'])
-
-                        send_text_to_ui("¿Deseas saber sobre otro concepto?\n1) Clases 2) Objetos 3) Herencia 4) Polimorfismo 5) Encapsulamiento 6) No")
-                        texto_a_audio("¿Deseas saber sobre otra estructura?")
-
-                # btn_start = tk.Button(root, text="Volver a iniciar", command=start,
-                #               font=("Arial", 12, "bold"),
-                #               bg="#ffffff", fg="#555555",
-                #               borderwidth=0,
-                #               highlightthickness=0)
-
-                # btn_start.grid(column=0, row=2, pady=10)
-
-
-        elif respuesta == "cuestionario":
+        if respuesta == "cuestionario":
             print ("Cuestionario")
 
             def comp(solucion, rpta):
@@ -496,7 +249,7 @@ def execute_start_logic():
                     tus_respuestas.append(0)
 
             image = Image.open("IMG/cuestionario.png")
-            image = image.resize((790, 450))
+            image = image.resize((750, 425))
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
 
@@ -574,78 +327,53 @@ def execute_start_logic():
             send_text_to_ui("Bueno, eso es todo aqui, espero vuelvas para retar tus conocimientos.")
             texto_a_audio("Bueno, eso es todo aqui en cuestioanrio, espero vuelvas para retar tus conocimientos.")
 
-        elif respuesta == "juegos":
-            image = Image.open("IMG/juegos.png")
+        elif respuesta == "ahorcado":
+            jugar_ahorcado()
+        
+        elif respuesta == "laberinto de instrucciones":
+            image = Image.open("IMG/fondolaberinto.jpg")
             image = image.resize((790, 450))
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
 
-            send_text_to_ui("Elegiste la opcion JUEGOS.")
-            texto_a_audio("Elegiste la opcion JUEGOS.")
-            send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
-            texto_a_audio("Por el momento tenemos 2 juegos bastante divertidos, ¿cual te gustaria probar?")
+            canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
+            canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
+
+            grid = Grid(canvas, WIDTH, HEIGHT, CELL_SIZE)
 
             while True:
-                
-                mic_label.grid(column=0, row=2, pady=10)
+                send_text_to_ui("Escuchando tus indicaciones...")
+                texto_a_audio("Escuchando tus indicaciones...")
+                mic_label.grid(column=0, row=2, pady=10)                
                 respuesta = enviar_voz()
-                mic_label.grid_forget()
+                mic_label.grid_forget();
+                if respuesta == "arriba":
+                    grid.move_up(None)
+                elif respuesta == "abajo":
+                    grid.move_down(None)
+                elif respuesta == "derecha":
+                    grid.move_right(None)
+                elif respuesta == "izquierda":
+                    grid.move_left(None)
+                else:
+                    texto_a_audio("No es una dirección válida, dime una dirección válida.")
 
-                if respuesta == "salir":
+                if grid.user_cell == grid.goal_cell:
+                    texto_a_audio("¡Felicidades, llegaste a tu destino!")
                     break
-
-                if respuesta == "laberinto de instrucciones":
-
-                    image = Image.open("IMG/fondolaberinto.jpg")
-                    image = image.resize((790, 450))
-                    photo = ImageTk.PhotoImage(image)
-                    image_queue.put(photo)
-
-                    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
-                    canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
-
-                    grid = Grid(canvas, WIDTH, HEIGHT, CELL_SIZE)
-
-                    while True:
-                        send_text_to_ui("Escuchando tus indicaciones...")
-                        texto_a_audio("Escuchando tus indicaciones...")
-                        mic_label.grid(column=0, row=2, pady=10)                
-                        respuesta = enviar_voz()
-                        mic_label.grid_forget();
-                        if respuesta == "arriba":
-                            grid.move_up(None)
-                        elif respuesta == "abajo":
-                            grid.move_down(None)
-                        elif respuesta == "derecha":
-                            grid.move_right(None)
-                        elif respuesta == "izquierda":
-                            grid.move_left(None)
-                        else:
-                            texto_a_audio("No es una dirección válida, dime una dirección válida.")
-
-                        if grid.user_cell == grid.goal_cell:
-                            texto_a_audio("¡Felicidades, llegaste a tu destino!")
-                            break
                     
-                    canvas.destroy()
-                
-                elif respuesta == "ahorcados":
-                    jugar_ahorcado()
-
-                image = Image.open("IMG/juegos.png")
-                image = image.resize((790, 450))
-                photo = ImageTk.PhotoImage(image)
-                image_queue.put(photo)        
-                
-                send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
-                texto_a_audio("Bueno, ahora ¿cual te gustaria probar?")
-
-                send_text_to_ui("1) Laberinto de instrucciones 2) Ahorcados 3) Salir")
+            canvas.destroy()
 
         elif respuesta == "salir":
             send_text_to_ui("Ha sido un gusto poder ayudarte, regresa pronto.")
             texto_a_audio("Ha sido un gusto poder ayudarte, regresa pronto.")
             break
+
+        """image = Image.open("IMG/juegos.png")
+        image = image.resize((790, 450))
+        photo = ImageTk.PhotoImage(image)
+        image_queue.put(photo)""" 
+
 
 def verificar_victoria(cadena):
     if "_" not in cadena:
@@ -665,9 +393,9 @@ def preguntas(i):
     texto_a_audio(datos[respuesta])
 
 def actualizar_imagen_ahorcado(contador):
-    nombre = "IMG/ahorcado" + str(contador + 1) + ".jpg"
+    nombre = "IMG/ahorcado" + str(contador + 1) + ".png"
     image = Image.open(nombre)
-    image = image.resize((200, 300))
+    image = image.resize((200, 350))
     photo = ImageTk.PhotoImage(image)
     image_queue.put(photo)
 
@@ -753,16 +481,30 @@ def jugar_ahorcado():
             if ahorcado_info[2] >= 6:  # Límite de 6 fallos
                 lbl_track.config(text=f"PERDISTE. La palabra era: {palabra}")
                 texto_a_audio(f"Perdiste. La palabra era {palabra}.")
+                lbl_track.grid_forget()
                 break
 
             if verificar_victoria(ahorcado_info[1]):
                 lbl_track.config(text="¡Felicidades, has ganado!")
                 texto_a_audio("¡Felicidades, has ganado!")
+                lbl_track.grid_forget()
                 break
 
         # Preguntar si se quiere jugar de nuevo
-        send_text_to_ui("1) Si 2) No")
+        send_text_to_ui("¿Deseas jugar otra partida?")
         texto_a_audio("¿Deseas jugar otra partida?")
+
+        lbl_opcion_si = tk.Label(
+        root, text="1) Sí",
+        font=("Helvetica", 16), anchor="center"
+        )
+        lbl_opcion_si.grid(column=0, row=1, pady=5, sticky="ew")
+
+        lbl_opcion_no = tk.Label(
+            root, text="2) No",
+            font=("Helvetica", 16), anchor="center"
+        )
+        lbl_opcion_no.grid(column=0, row=2, pady=5, sticky="ew")
         while True:
             respuesta = enviar_voz()
             if respuesta in ["no", "si"]:
