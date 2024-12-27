@@ -246,7 +246,7 @@ def execute_start_logic():
             jugar_ahorcado()
         
         elif respuesta == "laberinto":
-            image = Image.open("IMG/fondolaberinto.jpg")
+            image = Image.open("IMG/fondolaberinto.png")
             image = image.resize((790, 450))
             photo = ImageTk.PhotoImage(image)
             image_queue.put(photo)
