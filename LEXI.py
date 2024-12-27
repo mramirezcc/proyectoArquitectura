@@ -21,7 +21,7 @@ engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices
 root = tk.Tk()
 root.iconbitmap("IMG/icon.ico")
 root.geometry("800x600")
-root.title("ASISTENTE VIRTUAL")
+root.title("LEXI ASISTENTE")
 root.config(bg=defaultBgColor)
 root.resizable(False, False) # deshabilita redimensionamiento
 root.maxsize(800, 600) # establece tamaño máximo
