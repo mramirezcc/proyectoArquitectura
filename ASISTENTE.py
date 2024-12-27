@@ -228,6 +228,7 @@ def execute_start_logic():
             "Por favor, di la opción que deseas elegir."
         )
         send_text_to_ui("¿Qué opción eliges?")
+        send_text_to_ui("")
 
         # Esperar respuesta por voz
         mic_label.grid(column=0, row=7, pady=10)
@@ -481,7 +482,6 @@ def jugar_cuestionario():
         opciones_mezcladas = random.sample(opciones, len(opciones))
 
         # Mostrar la pregunta y las opciones
-        texto_a_audio("Pregunta:")
         #send_text_to_ui(f"Pregunta {preguntas_realizadas + 1}: {pregunta_texto}")
         lbl_pregunta = tk.Label(
             root,
@@ -532,9 +532,6 @@ def jugar_cuestionario():
         if respuesta in letras_opciones:
             indice_respuesta = letras_opciones.index(respuesta)
             if opciones_mezcladas[indice_respuesta] == respuesta_correcta:
-                texto_a_audio("¡Correcto!")
-                
-                texto_a_audio("Pregunta:")
                 lbl_aux = tk.Label(
                     root,
                     text=f"¡Correcto!",
@@ -547,11 +544,11 @@ def jugar_cuestionario():
                     justify="center",
                 )
                 lbl_aux.grid(column=0, row=1, pady=5, sticky="ew")
+                texto_a_audio("¡Correcto!")
                 lbl_aux.grid_forget()
 
                 aciertos += 1
             else:
-                texto_a_audio(f"Incorrecto. La respuesta correcta era: {respuesta_correcta}")
                 lbl_aux = tk.Label(
                     root,
                     text=f"Incorrecto. La respuesta correcta era: {respuesta_correcta}",
@@ -564,6 +561,7 @@ def jugar_cuestionario():
                     justify="center",
                 )
                 lbl_aux.grid(column=0, row=1, pady=5, sticky="ew")
+                texto_a_audio(f"Incorrecto. La respuesta correcta era: {respuesta_correcta}")
                 lbl_aux.grid_forget()
         else:
             send_text_to_ui("Por favor, elige una letra válida.")
