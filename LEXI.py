@@ -246,38 +246,7 @@ def execute_start_logic():
             jugar_ahorcado()
         
         elif respuesta == "laberinto":
-            image = Image.open("IMG/fondolaberinto.png")
-            image = image.resize((790, 450))
-            photo = ImageTk.PhotoImage(image)
-            image_queue.put(photo)
-            
-            texto_a_audio("Dirige el cuadro verde hacia el cuadro rojo")
-            canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
-            canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
-
-            grid = Grid(canvas, WIDTH, HEIGHT, CELL_SIZE)
-
-            while True:
-                send_text_to_ui("Escuchando tus indicaciones...")
-                mic_label.grid(column=0, row=2, pady=10)                
-                respuesta = enviar_voz()
-                mic_label.grid_forget()
-                if respuesta == "arriba":
-                    grid.move_up(None)
-                elif respuesta == "abajo":
-                    grid.move_down(None)
-                elif respuesta == "derecha":
-                    grid.move_right(None)
-                elif respuesta == "izquierda":
-                    grid.move_left(None)
-                else:
-                    texto_a_audio("No es una dirección válida, dime una dirección válida.")
-
-                if grid.user_cell == grid.goal_cell:
-                    texto_a_audio("¡Felicidades, llegaste a tu destino!")
-                    break
-                    
-            canvas.destroy()
+            jugar_laberinto()
 
         elif respuesta == "salir":
             send_text_to_ui("Ha sido un gusto poder ayudarte, regresa pronto.")
@@ -564,6 +533,40 @@ def jugar_cuestionario():
     # Mostrar puntuación final
     texto_a_audio(f"Cuestionario terminado. Obtuviste {aciertos} de {total_preguntas} aciertos.")
     send_text_to_ui(f"Cuestionario terminado. Puntuación: {aciertos}/{total_preguntas}")
+
+def jugar_laberinto():
+    image = Image.open("IMG/fondolaberinto.png")
+    image = image.resize((790, 450))
+    photo = ImageTk.PhotoImage(image)
+    image_queue.put(photo)
+            
+    texto_a_audio("Dirige el cuadro verde hacia el cuadro rojo")
+    canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT)
+    canvas.grid(column=0, row=0, pady=20)  # Posiciona el canvas en la columna 1
+
+    grid = Grid(canvas, WIDTH, HEIGHT, CELL_SIZE)
+
+    while True:
+        send_text_to_ui("Escuchando tus indicaciones...")
+        mic_label.grid(column=0, row=2, pady=10)                
+        respuesta = enviar_voz()
+        mic_label.grid_forget()
+        if respuesta == "arriba":
+            grid.move_up(None)
+        elif respuesta == "abajo":
+            grid.move_down(None)
+        elif respuesta == "derecha":
+            grid.move_right(None)
+        elif respuesta == "izquierda":
+            grid.move_left(None)
+        else:
+            texto_a_audio("No es una dirección válida, dime una dirección válida.")
+
+        if grid.user_cell == grid.goal_cell:
+            texto_a_audio("¡Felicidades, llegaste a tu destino!")
+            break
+                    
+    canvas.destroy()
 
 def enviar_voz():
     while(True):
