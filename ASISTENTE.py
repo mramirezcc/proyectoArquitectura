@@ -411,8 +411,8 @@ def jugar_ahorcado():
         texto_a_audio("¿Deseas jugar otra partida?")
 
         lbl_opcion_si = tk.Label(
-        root, text="1) Sí",
-        font=("Helvetica", 16), anchor="center"
+            root, text="1) Sí",
+            font=("Helvetica", 16), anchor="center"
         )
         lbl_opcion_si.grid(column=0, row=1, pady=5, sticky="ew")
 
